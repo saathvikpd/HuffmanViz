@@ -32,3 +32,7 @@ npm run dev -- --open
 ## Building static site
 
 Just push to github. 
+
+## Published site
+
+https://saathvikpd.github.io/finalproject/
