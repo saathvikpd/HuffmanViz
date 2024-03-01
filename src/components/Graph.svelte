@@ -246,7 +246,7 @@
 <style>
     .graph {
       width: 100%; /* Hello testing*/
-      height: 100vh; /* check problem when setting width */
+      height: 100vh; /* check problem when se34535tting width */
       position: absolute;
       outline: white solid 7px;
       stroke-width: 1px;
