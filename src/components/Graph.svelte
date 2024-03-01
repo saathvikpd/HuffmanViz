@@ -7,14 +7,12 @@
 
   export let index, width, height;
 
+  const sent = "data_science_class";
   
-  const lst = ["d", "a", "t", "_", "s", "c", "i", "e", "n", "l"];
-  const lst1 = [": 1", ": 3", ": 1", ": 2", ": 3", ": 3", ": 1", ": 2", ": 1", ": 1"];
-  const order = [0, 1, 2, 1, 3, 4, 5, 6, 7, 8, 5, 7, 3, 5, 9, 1, 4, 4]
   const start = 620;
   let x_pos = [];
   let y_pos = [];
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < sent.length; i++) {
     x_pos.push(start + (i * 10));
     y_pos.push(40);
   }
@@ -25,7 +23,33 @@
     easing: cubicOut,
   };
 
-  let letters = {"d": 0, "a": 20, "t": 40, "_": 60, "s": 80, "c": 100, "i": 120, "e": 140, "n": 160, "l": 180};
+  let lst = [];
+  let lst1 = [];
+  let order = [];
+  let inds = {};
+  let letters = {};
+  let counter = 0;
+
+  for (let l = 0; l < sent.length; l++) {
+    if (!(sent[l] in letters)) {
+      letters[sent[l]] = 0;
+      inds[sent[l]] = counter;
+      counter += 1;
+    }
+    letters[sent[l]] += 1;
+    order.push(inds[sent[l]])
+  }
+  
+
+  lst = Object.keys(letters);
+  lst1 = Object.values(letters);
+
+  let items = Object.keys(letters).map(function(key) {
+    return [key, letters[key]];
+  });
+  items.sort(function(first, second) {
+    return first[1] - second[1];
+  });
 
   const tweenedX = tweened(
     x_pos,
@@ -39,10 +63,9 @@
 
   $: {
     if (index === 0) {
-      letters = {"d": 0, "a": 20, "t": 40, "_": 60, "s": 80, "c": 100, "i": 120, "e": 140, "n": 160, "l": 180};
       x_pos = [];
       y_pos = [];
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < sent.length; i++) {
         x_pos.push(start + (i * 10));
         y_pos.push(40);
       }
@@ -51,53 +74,71 @@
     }
 
     if (index === 1) {
-      letters = {"d": 0, "a": 20, "t": 40, "_": 60, "s": 80, "c": 100, "i": 120, "e": 140, "n": 160, "l": 180};
+
+      lst = [];
+      lst1 = [];
+      order = [];
+      inds = {};
+      letters = {};
+      counter = 0;
+
+      for (let l = 0; l < sent.length; l++) {
+        if (!(sent[l] in letters)) {
+          letters[sent[l]] = 0;
+          inds[sent[l]] = counter;
+          counter += 1;
+        }
+        letters[sent[l]] += 1;
+        order.push(inds[sent[l]])
+      }
+
+      lst = Object.keys(letters);
+      lst1 = Object.values(letters);
+
       x_pos = [];
       y_pos = [];
       for (let i = 0; i < 18; i++) {
         x_pos.push(start + 50)
-        y_pos.push(250 + letters[lst[order[i]]]);
+        y_pos.push(250 + (20 * inds[lst[order[i]]]));
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
     }
 
     if (index === 2) {
-      letters["t"] = 20;
-      letters["i"] = 40;
-      letters["n"] = 60;
-      letters["l"] = 80;
-      letters["_"] = 100;
-      letters["e"] = 120;
-      letters["a"] = 140;
-      letters["s"] = 160;
-      letters["c"] = 180;
+
+      counter = 0;
+      for (let l = 0; l < items.length; l++) {
+        inds[items[l][0]] = counter;
+        counter += 1;
+      }
+
       x_pos = [];
       y_pos = [];
       for (let i = 0; i < 18; i++) {
         x_pos.push(start + 50)
-        y_pos.push(250 + letters[lst[order[i]]]);
+        y_pos.push(250 + (20 * inds[lst[order[i]]]));
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
     }
 
     if (index === 3) {
-      letters["d"] = 0
-      letters["t"] = 0;
+      inds[items[0][0]] = 0
+      inds[items[1][0]] = 0;
       x_pos = [];
       y_pos = [];
       for (let i = 0; i < 18; i++) {
-        if (lst[order[i]] === "d") {
+        if (lst[order[i]] === items[0][0]) {
           x_pos.push(start);
         }
-        else if (lst[order[i]] === "t") {
+        else if (lst[order[i]] === items[1][0]) {
           x_pos.push(start + 100);
         }
         else {
           x_pos.push(start + 50);
         }
-        y_pos.push(250 + letters[lst[order[i]]]);
+        y_pos.push(250 + (20 * inds[lst[order[i]]]));
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
@@ -158,7 +199,7 @@
         in:fly={{x: 300, duration: 400}}
         out:fly={{x: 300, duration: 400}}
       >
-        {lst1[order[i]]}
+        {": " + lst1[order[i]]}
       </text>
     {/if}
   {/each}
@@ -198,7 +239,7 @@
       in:fly={{x: 300, duration: 400}}
       out:fly={{x: 300, duration: 400}}
     >
-      2
+      {items[0][1] + items[1][1]}
     </text>
   {/if}
 </svg>
