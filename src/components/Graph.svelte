@@ -243,10 +243,9 @@
     </text>
   {/if}
 </svg>
-
 <style>
     .graph {
-      width: 100%;
+      width: 100%; /* Hello testing*/
       height: 100vh; /* check problem when setting width */
       position: absolute;
       outline: white solid 7px;
