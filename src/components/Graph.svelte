@@ -8,7 +8,8 @@
   export let index, width, height;
 
   const sent = "data_science_class";
-  
+  let sectionText = "";
+
   const start = 620;
   let x_pos = [];
   let y_pos = [];
@@ -63,6 +64,7 @@
 
   $: {
     if (index === 0) {
+      
       x_pos = [];
       y_pos = [];
       for (let i = 0; i < sent.length; i++) {
@@ -71,10 +73,20 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+       sectionText = [
+    "Section 1",
+    "Huffman encoding is a compression algorithm",
+    "made to compress data that are larger, primarily comprised of characters",
+    "which take up 4 bytes. It converts it into bits, where characters dependent",
+    "on their frequency are represented by 0 and 1s.",
+    "An example given is dsc 106."
+  ];
+  let sectionId = "";
+
     }
 
     if (index === 1) {
-
+      //sectionText = "Section 2"; 
       lst = [];
       lst1 = [];
       order = [];
@@ -103,10 +115,11 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Section 2";
+
     }
 
     if (index === 2) {
-
       counter = 0;
       for (let l = 0; l < items.length; l++) {
         inds[items[l][0]] = counter;
@@ -121,6 +134,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Section 3";
     }
 
     if (index === 3) {
@@ -143,9 +157,12 @@
       $tweenedX = x_pos;
       $tweenedY = y_pos;
       console.log($tweenedY);
+      sectionText = "Section 4";
+
     }
 
     if (index > 3) {
+      
       letters["i"] = 0;
       letters["n"] = 20;
       letters["l"] = 40;
@@ -173,7 +190,11 @@
       $tweenedX = x_pos;
       $tweenedY = y_pos;
       console.log($tweenedY);
+      sectionText = "Section 5";
     }
+
+    
+
 
   }
 
@@ -191,6 +212,7 @@
     >
       {lst[order[i]]}
     </text>
+    
     {#if index > 0}
       <text
         x={$tweenedX[i] + 20}
@@ -242,8 +264,34 @@
       {items[0][1] + items[1][1]}
     </text>
   {/if}
+
+  {#if index <= 4}
+  
+    <text
+      x={$tweenedX[0] + 400} 
+      y={$tweenedY[0]}
+      class="sectionText"
+    >
+      {sectionText}
+    </text>
+  {/if}
+
 </svg>
 <style>
+    .scrollable-container {
+      max-height: 100px; /* Set the maximum height of the container */
+      overflow: auto;    /* Enable vertical scrollbar if content exceeds the height */
+      border: 1px solid #ccc; /* Optional: Add border for visualization */
+    }
+
+    div {
+      margin-bottom: 8px; /* Add some margin between lines */
+    }
+    .sectionText {
+      font-size: 20px;
+      fill: black; /* Set the text color */
+      white-space: pre-line
+    }
     .graph {
       width: 100%; /* Hello testing*/
       height: 100vh; /* check problem when se34535tting width */
