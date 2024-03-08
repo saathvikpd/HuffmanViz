@@ -2,8 +2,7 @@
   import { fly, fade, draw } from "svelte/transition";
   import { tweened } from "svelte/motion";
   import { cubicOut, cubicInOut } from "svelte/easing";
-  import { cities } from "../data/cities";
-  import { troops } from "../data/troops";
+
 
   export let index, width, height;
 
@@ -303,3 +302,4 @@
       stroke: #0d51ef;
     }
 </style>
+
