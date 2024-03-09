@@ -7,7 +7,7 @@ let root = null;
 let codes = [];
 
 function setup() {
-	let cnv = createCanvas(1800, 400);
+	let cnv = createCanvas(1800, 800);
 	background(500);
 	translate(width / 2, 50);
 	for (let i = 0; i < charArray1.length; i++) {

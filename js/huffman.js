@@ -49,7 +49,7 @@ function displayTree(root, parent, depth){
     }
     drawTree(root, parent, root.data);
 
-    const dx = width / (pow(2,  depth + 1));
+    const dx = (width - 80) / (pow(2,  depth + 1));
     root.left.x = root.x - dx;
     root.left.y = root.y + 50;
     displayTree(root.left, root, depth+1);
@@ -58,16 +58,31 @@ function displayTree(root, parent, depth){
     displayTree(root.right, root,  depth+1);
 }
 
+let hoveredNode = null;
+
 function drawTree(root, parent, textData) {
+    hoveredNode = getHoveredNode(root); // Check if the mouse is over the node
+
     stroke(128, 0, 128);
     line(root.x, root.y, parent.x, parent.y);
-    stroke(0);
-    fill(10, 147, 201);
-    ellipse(root.x, root.y, 30, 30);
-    fill(255);
+
+    if (hoveredNode === root) {
+        fill(173, 216, 230, 150); // Set fill color to a lighter blue with opacity
+    } else {
+        fill(173, 216, 230);
+    }
+
+    ellipse(root.x, root.y, 50, 50);
+
+    fill(0);
     noStroke();
     textAlign(CENTER);
     text(textData, root.x, root.y + 5);
+}
+
+function isMouseOverNode(node) {
+    return mouseX > node.x - 25 && mouseX < node.x + 25 && mouseY > node.y - 25 && mouseY < node.y + 25;
+
 }
 
 function HuffmanCode(c, freq, code){
@@ -84,4 +99,20 @@ function getCodes(root, s, codes){
     }
     getCodes(root.left, s + "0", codes);
     getCodes(root.right, s + "1", codes);
+}
+
+function mouseMoved() {
+    hoveredNode = getHoveredNode(root);
+}
+
+function getHoveredNode(node) {
+    if (node.left == null && node.right == null) {
+        return isMouseOverNode(node) ? node : null;
+    }
+
+    const leftHovered = getHoveredNode(node.left);
+    if (leftHovered) return leftHovered;
+
+    const rightHovered = getHoveredNode(node.right);
+    return rightHovered;
 }
