@@ -2,6 +2,7 @@
     export let treeData;
 
     import Graph from "./Graph.svelte";
+    import ScrollyTeller from "./ScrollyTeller.svelte";
     import { onMount } from "svelte";
   
     let userInput = "";
