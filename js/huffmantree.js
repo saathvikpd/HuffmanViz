@@ -58,32 +58,19 @@ function displayTree(root, parent, depth){
     displayTree(root.right, root,  depth+1);
 }
 
-let hoveredNode = null;
 
 function drawTree(root, parent, textData) {
-    hoveredNode = getHoveredNode(root); // Check if the mouse is over the node
 
     stroke(128, 0, 128);
     line(root.x, root.y, parent.x, parent.y);
-
-    if (hoveredNode === root) {
-        fill(173, 216, 230, 150); // Set fill color to a lighter blue with opacity
-    } else {
-        fill(173, 216, 230);
-    }
-
+    fill(173, 216, 230);
     ellipse(root.x, root.y, 50, 50);
-
     fill(0);
     noStroke();
     textAlign(CENTER);
     text(textData, root.x, root.y + 5);
 }
 
-function isMouseOverNode(node) {
-    return mouseX > node.x - 25 && mouseX < node.x + 25 && mouseY > node.y - 25 && mouseY < node.y + 25;
-
-}
 
 function HuffmanCode(c, freq, code){
     this.c = c;
@@ -101,18 +88,22 @@ function getCodes(root, s, codes){
     getCodes(root.right, s + "1", codes);
 }
 
-function mouseMoved() {
-    hoveredNode = getHoveredNode(root);
-}
+function generateHuffmanCode(userText, root) {
+    let huffmanCodes = [];
+    getCodes(root, "", huffmanCodes);
 
-function getHoveredNode(node) {
-    if (node.left == null && node.right == null) {
-        return isMouseOverNode(node) ? node : null;
+    let encryptedText = "";
+    let i = 0;
+    while (i<userText.length) {
+        let char = userText[i];
+        let huffmanCode = huffmanCodes.find(code => code.c === char);
+        if (huffmanCode) {
+            encryptedText += huffmanCode.code;
+        } else {
+            encryptedText += char;
+        }
+        i++;
     }
 
-    const leftHovered = getHoveredNode(node.left);
-    if (leftHovered) return leftHovered;
-
-    const rightHovered = getHoveredNode(node.right);
-    return rightHovered;
+    return encryptedText;
 }
