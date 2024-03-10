@@ -7,17 +7,6 @@
     
   </div>
   
-  <style>
-    .graph-container {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-top: 20px;
-    }
-
-    main {
-      padding: 20px;
-    }
-  </style>
 
   <script>
     import Graph from "./Graph.svelte";
@@ -67,3 +56,15 @@
       <Graph {huffmanTree} />
     {/if}
   </main>
+
+<style>
+.graph-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+main {
+  padding: 20px;
+}
+</style>
