@@ -2,4 +2,6 @@
     import App from '../components/App.svelte';
 </script>
 
-<App />
+<main>
+    <App />
+</main>
