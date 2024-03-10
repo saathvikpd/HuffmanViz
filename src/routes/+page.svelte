@@ -1,7 +1,13 @@
+// <script>
+//    import ScrollyTeller from '../components/ScrollyTeller.svelte'
+//</script>
+
+//<main>
+//    <ScrollyTeller />
+//</main>
+
 <script>
-    import ScrollyTeller from '../components/ScrollyTeller.svelte'
+    import App from '../components/App.svelte';
 </script>
 
-<main>
-    <ScrollyTeller />
-</main>
+<App />
