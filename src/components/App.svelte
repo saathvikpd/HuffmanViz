@@ -13,6 +13,10 @@
       padding: 10px;
       margin-top: 20px;
     }
+
+    main {
+      padding: 20px;
+    }
   </style>
 
   <script>
@@ -63,9 +67,3 @@
       <Graph {huffmanTree} />
     {/if}
   </main>
-  
-  <style>
-    main {
-      padding: 20px;
-    }
-  </style>
