@@ -16,6 +16,8 @@ function setup() {
 	root = huffman.buildTree(huffmanQueue);
 	huffman.printCode(root, 1, codes);
 	getTreeDetails(codes);
+
+  
 }
 
 
