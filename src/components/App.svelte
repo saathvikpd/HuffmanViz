@@ -1,14 +1,6 @@
 <script>
     export let treeData;
-  
-  </script>
-  
-  <div class="graph-container">
-    
-  </div>
-  
 
-  <script>
     import Graph from "./Graph.svelte";
     import { onMount } from "svelte";
   
@@ -45,6 +37,11 @@
       visualizeTree();
     });
   </script>
+  
+  <div class="graph-container">
+    
+  </div>
+  
   
   <main>
     <label for="inputData">Enter text:</label>
