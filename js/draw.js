@@ -1,44 +1,45 @@
-function displayCharacterDetails(characterList) {
-    let container = document.getElementById("character-list");
-    for (const character of characterList) {
-        let item = document.createElement('li');
-        let content = character.symbol + " : " + character.huffmanCode;
-        let node = document.createTextNode(content);
-        item.appendChild(node);
-        container.appendChild(item);
+function getTreeDetails(codes) {
+    let list = document.getElementById("codes");
+    for (let i = 0; i < codes.length; i++) {
+        let ele = document.createElement('li');
+        let text = codes[i].c + " : " + codes[i].code;
+        let task = document.createTextNode(text);
+        ele.appendChild(task);
+        list.appendChild(ele);
     }
 }
 
-function Character(symbol, frequency) {
-    this.symbol = symbol;
-    this.frequency = frequency;
+function textDetails(c, data) {
+    this.c = c;
+    this.data = data;
 }
 
-document.getElementById('submit-button').addEventListener('click', handleInputSubmission);
+document.getElementById('btn').addEventListener('click', submitText);
 
-function handleInputSubmission(e) {
-    let listContainer = document.getElementById("character-list");
-    listContainer.innerHTML = '';
-    let input = document.getElementById('input-text').value;
+function submitText(e) {
+    let mylist = document.getElementById("codes");
+    mylist.innerHTML = '';
+    let txt = document.getElementById('huff-text').value;
 
-    clearArray(symbolArray);
-    clearArray(frequencyArray);
-    clearArray(huffmanCodes);
-    clearArray(huffmanPriorityQueue);
+    emptyArray(charArray1);
+    emptyArray(charfreq1);
+    emptyArray(codes);
+    emptyArray(huffmanQueue);
 
-    for (const char of input.replace(/\s/g, '')) {
-        let symbolIndex = symbolArray.indexOf(char);
-        if (symbolIndex == -1) {
-            symbolArray.push(char);
-            frequencyArray.push(1);
+    for (let i = 0; i < txt.length; i++) {
+        if (txt[i] == " ") continue;
+        let n = charArray1.indexOf(txt[i]);
+        if (n == -1) {
+            charArray1.push(txt[i]);
+            charfreq1.push(1);
         } else {
-            frequencyArray[symbolIndex] += 1;
+            charfreq1[n] += 1;
         }
     }
-    initializeHuffmanTree();
+    setup();
 }
 
-function clearArray(array) {
+function emptyArray(array) {
     while (array.length > 0) {
         array.pop();
     }
