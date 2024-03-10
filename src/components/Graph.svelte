@@ -2,8 +2,7 @@
   import { fly, fade, draw } from "svelte/transition";
   import { tweened } from "svelte/motion";
   import { cubicOut, cubicInOut } from "svelte/easing";
-  import { cities } from "../data/cities";
-  import { troops } from "../data/troops";
+
 
   export let index, width, height;
 
@@ -70,6 +69,7 @@
 
   $: {
     if (index === 0) {
+      
       x_pos = [];
       y_pos = [];
       for (let i = 0; i < obj.sentence.length; i++) {
@@ -78,6 +78,16 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+       sectionText = [
+    "Section 1",
+    "Huffman encoding is a compression algorithm",
+    "made to compress data that are larger, primarily comprised of characters",
+    "which take up 4 bytes. It converts it into bits, where characters dependent",
+    "on their frequency are represented by 0 and 1s.",
+    "An example given is dsc 106."
+  ];
+  let sectionId = "";
+
     }
 
     if (index === 1) {
@@ -113,6 +123,8 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Section 2";
+
     }
 
     if (index === 2) {
@@ -161,6 +173,7 @@
       console.log(obj.order);
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Section 3";
     }
 
     if (index === 3) {
@@ -1291,13 +1304,25 @@
     </text>
   {/if}
 
-
 </svg>
-
 <style>
+    .scrollable-container {
+      max-height: 100px; /* Set the maximum height of the container */
+      overflow: auto;    /* Enable vertical scrollbar if content exceeds the height */
+      border: 1px solid #ccc; /* Optional: Add border for visualization */
+    }
+
+    div {
+      margin-bottom: 8px; /* Add some margin between lines */
+    }
+    .sectionText {
+      font-size: 20px;
+      fill: black; /* Set the text color */
+      white-space: pre-line
+    }
     .graph {
-      width: 100%;
-      height: 100vh; /* check problem when setting width */
+      width: 100%; /* Hello testing*/
+      height: 100vh; /* check problem when se34535tting width */
       position: absolute;
       outline: white solid 7px;
       stroke-width: 1px;
@@ -1306,3 +1331,4 @@
       stroke: #0d51ef;
     }
 </style>
+

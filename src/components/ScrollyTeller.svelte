@@ -3,6 +3,8 @@
   import Map from "./Map.svelte";
   import { geoMercator } from "d3-geo";
   import Graph from "./Graph.svelte";
+  import App from './App.svelte';
+
 
   let count, offset, progress;
   let width, height;
