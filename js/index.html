@@ -1,7 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
     <script src="p5.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="p5.sound.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
 
@@ -75,8 +74,10 @@
         <li id="codes-heading">Letter Keys</li>
     </ul>
 
-    <textarea type="text" id="huff-text" spellcheck="false" placeholder="Add text to create huffman tree"></textarea>
+    <textarea type="text" id="huff-text" spellcheck="false" placeholder="Add text here"></textarea>
     <button type="button" id="btn">Submit</button>
+
+    <svg id="huffman-svg" width="1800" height="50"></svg>
 
     <script src="huffmantree.js"></script>
     <script src="sketch.js"></script>

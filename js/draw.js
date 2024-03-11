@@ -1,5 +1,6 @@
 function getTreeDetails(codes) {
     let list = document.getElementById("codes");
+    list.innerHTML = ''; // Clear the previous list content
     for (let i = 0; i < codes.length; i++) {
         let ele = document.createElement('li');
         let text = codes[i].c + " : " + codes[i].code;
@@ -17,15 +18,15 @@ function textDetails(c, data) {
 document.getElementById('btn').addEventListener('click', submitText);
 
 function submitText(e) {
-    let mylist = document.getElementById("codes");
-    mylist.innerHTML = '';
     let txt = document.getElementById('huff-text').value;
 
+    // Clear arrays and reset tree
     emptyArray(charArray1);
     emptyArray(charfreq1);
     emptyArray(codes);
     emptyArray(huffmanQueue);
-
+    
+    // Populate arrays based on user input
     for (let i = 0; i < txt.length; i++) {
         if (txt[i] == " ") continue;
         let n = charArray1.indexOf(txt[i]);
@@ -36,11 +37,13 @@ function submitText(e) {
             charfreq1[n] += 1;
         }
     }
+
+    // Clear and update the tree visualization
+    let svg = d3.select("#huffman-svg");
+    svg.selectAll("*").remove(); // Clear the previous tree content
     setup();
 }
 
 function emptyArray(array) {
-    while (array.length > 0) {
-        array.pop();
-    }
+    array.length = 0;
 }

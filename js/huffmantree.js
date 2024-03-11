@@ -107,3 +107,5 @@ function generateHuffmanCode(userText, root) {
 
     return encryptedText;
 }
+
+ 

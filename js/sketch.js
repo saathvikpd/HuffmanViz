@@ -8,7 +8,7 @@ let codes = [];
 
 function setup() {
 	let cnv = createCanvas(1800, 800);
-	background(500);
+	background(1000);
 	translate(width / 2, 50);
 	for (let i = 0; i < charArray1.length; i++) {
 		huffman.addNode(huffmanQueue, charArray1[i], charfreq1[i]);	
