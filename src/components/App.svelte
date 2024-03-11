@@ -51,7 +51,7 @@
     <button on:click={visualizeTree}>Visualize Huffman Tree</button>
   
     {#if huffmanTree}
-      <Graph {index} {width} {height} />
+      <Graph {huffmanTree} />
     {/if}
   </main>
 
