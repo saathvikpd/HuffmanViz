@@ -22,7 +22,8 @@
   let node_counter = 0;
 
   
-  const start = 650;
+  let start;
+  $: start = (width / 2) - 100;
   let x_pos = [];
   let y_pos = [];
   for (let i = 0; i < obj.sentence.length; i++) {
