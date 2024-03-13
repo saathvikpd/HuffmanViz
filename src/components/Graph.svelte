@@ -6,6 +6,8 @@
 
   export let index, width, height;
 
+  let sectionText;
+
   let obj = {
     sentence: "data_science_class",
     index: {}, // maps letter to order of appearance in sentence
