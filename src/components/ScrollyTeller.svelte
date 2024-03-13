@@ -25,11 +25,17 @@
   }
 
   
+  let outerWidth, innerWidth, outerHeight, innerHeight;
+
+  
   $: {
+    width = outerWidth;
     index = index;
   }
 
 </script>
+
+<svelte:window bind:innerWidth bind:outerWidth bind:innerHeight bind:outerHeight />
 
 <main>
 
