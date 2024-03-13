@@ -37,6 +37,32 @@
     onMount(() => {
       visualizeTree();
     });
+
+
+    let count, offset, progress;
+    let width, height;
+
+    let index = 0;
+    function incrementCount() {
+      index++;
+      if (index > 19) {
+        index = 19;
+      }
+    }
+
+    function decrementCount() {
+      index--;
+      if (index < 0) {
+        index = 0;
+      }
+    }
+
+    
+    $: {
+      index = index;
+      console.log(index);
+    }
+
   </script>
   
   <div class="graph-container">
@@ -50,9 +76,42 @@
   
     <button on:click={visualizeTree}>Visualize Huffman Tree</button>
   
-    {#if huffmanTree}
-      <Graph {huffmanTree} />
-    {/if}
+    <div
+      class="button"
+    >
+      <h1>
+        Huffman Tree
+      </h1>
+    </div>
+
+    <div
+      class="button"
+    >
+
+      <button
+        on:click={decrementCount}
+      >
+        Prev
+      </button>
+
+      <button
+        on:click={incrementCount}
+      >
+        Next
+    </button>
+    
+
+    </div>
+
+    <div 
+      class="background"
+      bind:clientWidth={width}
+      bind:clientHeight={height}
+    >
+      <Graph {index} {width} {height}/>
+    </div>
+
+    
   </main>
 
 <style>

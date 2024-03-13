@@ -7,7 +7,8 @@
 
 
   let count, offset, progress;
-  let width, height;
+  let width;
+  let height;
 
   let index = 0;
   function incrementCount() {
@@ -24,17 +25,22 @@
     }
   }
 
+  let outerWidth, innerWidth, outerHeight, innerHeight;
+
   
   $: {
+    width = outerWidth;
     index = index;
   }
 
 </script>
 
+<svelte:window bind:innerWidth bind:outerWidth bind:innerHeight bind:outerHeight />
+
 <main>
 
   <div
-    class="button"
+    class="buttonDiv"
   >
     <h1>
       Huffman Tree
@@ -42,12 +48,13 @@
   </div>
 
   <div
-    class="button"
+    class="buttonDiv"
   >
 
     <button
       on:click={decrementCount}
     >
+    
       Prev
     </button>
 
@@ -56,7 +63,7 @@
     >
       Next
   </button>
-   
+
 
   </div>
 
@@ -68,6 +75,8 @@
     <Graph {index} {width} {height}/>
   </div>
 
+  
+  
   
 
 </main>
@@ -82,7 +91,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		font-family: sans-serif;
+		font-family: 'Times New Roman', Times, serif;
 		background-color: rgb(229, 230, 221);
 	}
 
@@ -91,13 +100,21 @@
     height: 100vh;
     position: relative;
     outline: green solid 3px;
+    align-items: center
   }
 
-  .button {
+  .buttonDiv {
     display: flex;
 		align-items: center;
 		justify-content: space-between;
-    height: 60px
+    width: 200px;
+    height: 60px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+
+  button {
+    font-family: 'Times New Roman', Times, serif;
   }
 
   
