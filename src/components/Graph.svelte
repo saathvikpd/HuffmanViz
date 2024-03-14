@@ -16,13 +16,21 @@
     items: [] // sorted counts of the form [key (letter), count]. [list]
   };
 
-  let nodes = {};
-  let node_counter = 0;
   let sectionText;
+
+  let zeropos = []
+  let onepos = []
+
+  for (let i = 0; i < 9; i++) {
+    zeropos.push([0,0])
+    onepos.push([0,0])
+  }
+  let encodings = ["0110", "101", "0111", "101", "001", "110", "111", "1000", "010", "1001", "111", "010", "001", "111", "000", "101", "110", "110"];
+
 
   let start = (width / 2) - 100;
   
-  $: start = (width / 2) - 100;
+  
   let x_pos = [];
   let y_pos = [];
   for (let i = 0; i < obj.sentence.length; i++) {
@@ -37,6 +45,7 @@
   };
 
   let counter = 0;
+  
 
   let sent = obj.sentence;
   for (let l = 0; l < sent.length; l++) {
@@ -69,7 +78,19 @@
     tweenOptions
   );
 
+  const tweenedZero = tweened(
+    zeropos,
+    tweenOptions
+  )
+
+  const tweenedOne = tweened(
+    onepos,
+    tweenOptions
+  )
+
+
   $: {
+    start = (width / 2) - 100;
     if (index === 0) {
       
       x_pos = [];
@@ -164,7 +185,6 @@
         x_pos.push(start + 50)
         y_pos.push(250 + (20 * obj.index[obj.lst[obj.order[i]]]));
       }
-      console.log(obj.order);
       $tweenedX = x_pos;
       $tweenedY = y_pos;
       sectionText = "Sorts the counts for each character in increasing order";
@@ -862,7 +882,7 @@
       sectionText = "Sort!";
     }
 
-    if (index === 19) {
+    if (index >= 19) {
 
       obj.index["l"] = 16;
       obj.index["_"] = 16;
@@ -916,6 +936,35 @@
       $tweenedX = x_pos;
       $tweenedY = y_pos;
       sectionText = "And, finally, we combine the two trees into one gigantic tree to form our Huffman Tree";
+    }
+
+    if (index === 20) {
+
+      zeropos = [[$tweenedX[4] + 300, $tweenedY[4] - 330],
+                 [$tweenedX[4], $tweenedY[4] - 130],
+                 [$tweenedX[4] + 700, $tweenedY[4] - 130],
+                 [$tweenedX[4] - 75, $tweenedY[4] - 40],
+                 [$tweenedX[4] + 200, $tweenedY[4] - 20],
+                 [$tweenedX[4] + 600, $tweenedY[4] - 20],
+                 [$tweenedX[4] + 925, $tweenedY[4] - 40],
+                 [$tweenedX[4] + 330, $tweenedY[4] + 70],
+                 [$tweenedX[4] + 530, $tweenedY[4] + 70]];
+      onepos = [[$tweenedX[4] + 635, $tweenedY[4] - 330],
+                [$tweenedX[4] + 230, $tweenedY[4] - 130],
+                [$tweenedX[4] + 920, $tweenedY[4] - 130],
+                [$tweenedX[4] + 5, $tweenedY[4] - 40],
+                [$tweenedX[4] + 330, $tweenedY[4] - 20],
+                [$tweenedX[4] + 730, $tweenedY[4] - 20],
+                [$tweenedX[4] + 1000, $tweenedY[4] - 40],
+                [$tweenedX[4] + 400, $tweenedY[4] + 70],
+                [$tweenedX[4] + 600, $tweenedY[4] + 70]];
+      $tweenedZero = zeropos;
+      $tweenedOne = onepos;
+
+      console.log($tweenedZero);
+      console.log($tweenedOne);
+
+      sectionText = "Now, we use this tree to encode each character.\n\n We go down the tree, adding 0 for a left traversal and 1 for a right traversal.";
     }
 
 
@@ -1306,6 +1355,42 @@
     >
      18
     </text>
+  {/if}
+
+  {#if index > 19}
+    {#each {length: 9} as _ , i}
+      <text
+        x={$tweenedOne[i][0]}
+        y={$tweenedOne[i][1]}
+        in:fly={{x: 300, duration: 400}}
+        out:fly={{x: 300, duration: 400}}
+      >
+        1
+      </text>
+
+      <text
+      x={$tweenedZero[i][0]}
+      y={$tweenedZero[i][1]}
+        in:fly={{x: 300, duration: 400}}
+        out:fly={{x: 300, duration: 400}}
+      >
+        0
+      </text>
+
+    {/each}
+
+    {#each {length: 18} as _, i}
+
+      <text
+        x={$tweenedX[i] + 10}
+        y={$tweenedY[i] + 30}
+        in:fly={{x: -300, duration: 200}}
+        out:fly={{x: -300, duration: 200}}
+      >
+        ({encodings[i]})
+      </text>
+    {/each}
+    
   {/if}
   
   

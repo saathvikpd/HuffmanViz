@@ -13,8 +13,8 @@
   let index = 0;
   function incrementCount() {
 		index++;
-    if (index > 19) {
-      index = 19;
+    if (index > 20) {
+      index = 20;
     }
 	}
 
@@ -25,10 +25,12 @@
     }
   }
 
-  let outerWidth, innerWidth, outerHeight, innerHeight;
+  let outerWidth = 1000; 
+  let innerWidth, outerHeight, innerHeight;
 
   
   $: {
+    console.log(outerWidth)
     width = outerWidth;
     index = index;
   }
@@ -43,7 +45,7 @@
     class="buttonDiv"
   >
     <h1>
-      Huffman Tree
+      Huffman Trees
     </h1>
   </div>
 
@@ -99,7 +101,6 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    outline: green solid 3px;
     align-items: center
   }
 
@@ -107,14 +108,18 @@
     display: flex;
 		align-items: center;
 		justify-content: space-between;
-    width: 200px;
+    width: 210px;
+    margin: auto;
     height: 60px;
     font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(229, 230, 221);
   }
 
 
   button {
     font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    bottom: 5px
   }
 
   
