@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    // import ThemeSwitch from '$lib/ThemeSwitch/ThemeSwitch.svelte';
+    import Frequencies from '../components/Frequencies.svelte';
+
+    let userInput = '';
+  </script>
+
+
+<main>
+    <h1>Huffman Coding Visualization</h1>
+    <textarea bind:value={userInput} placeholder="Type some text here..."></textarea>
+    <Frequencies {userInput} />
+</main>
