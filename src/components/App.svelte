@@ -49,6 +49,7 @@
     <input bind:value={userInput} type="text" id="inputData" placeholder="Type text here" />
   
     <button on:click={visualizeTree}>Visualize Huffman Tree</button>
+
     {#if huffmanTree}
       <Graph {huffmanTree} />
     {/if}
