@@ -1,28 +1,4 @@
-class BaseNode {
-    constructor(value) {
-        this.value = value;
-        this.children = [];
-        this.x = 0;
-        this.y = 0;
-        this.shift = 0;
-        this.mod = 0;
-        // Additional properties for JavaScript implementation
-        this.leftSibling = null;
-        this.depth = 0; // Will be set during the tree construction or traversal
-    }
-
-    setAttrs(attrs) {
-        Object.keys(attrs).forEach(key => {
-            this[key] = attrs[key];
-        });
-    }
-
-    getAttr(attr, defaultValue = 0) {
-        return this.hasOwnProperty(attr) ? this[attr] : defaultValue;
-    }
-}
-
-function reingoldTilford(treeNode, siblingSeparation = 1.0, subtreeSeparation = 1.0, levelSeparation = 1.0, xOffset = 0.0, yOffset = 0.0) {
+export function reingoldTilford(treeNode, siblingSeparation = 1.0, subtreeSeparation = 1.0, levelSeparation = 1.0, xOffset = 0.0, yOffset = 0.0) {
     firstPass(treeNode, siblingSeparation, subtreeSeparation);
     let xAdjustment = secondPass(treeNode, levelSeparation, xOffset, yOffset);
     thirdPass(treeNode, xAdjustment);
@@ -38,6 +14,9 @@ function firstPass(treeNode, siblingSeparation = 1.0, subtreeSeparation = 1.0) {
         }
     });
 
+    // Calculate the shift of the left subtree and log.
+    console.log("Calculating shifts in firstPass for node:", treeNode.value);
+
     let shift = 0;
     for (let i = 1; i < treeNode.children.length; i++) {
         const current = treeNode.children[i];
@@ -47,6 +26,7 @@ function firstPass(treeNode, siblingSeparation = 1.0, subtreeSeparation = 1.0) {
 
     treeNode.children.forEach((child, index) => {
         child.shift += shift * (index / (treeNode.children.length - 1));
+        console.log(`Child after shift calculation: ${child.value}, shift: ${child.shift}, index: ${index}`);  // debug log
     });
 
     if (treeNode.children.length === 1) {
@@ -85,6 +65,9 @@ function getSubtreeShift(leftSubtree, rightSubtree, leftIdx, rightIdx, subtreeSe
 }
 
 function secondPass(treeNode, levelSeparation = 1.0, xOffset = 0.0, yOffset = 0.0, cumMod = 0.0, depth = 0, xAdjustment = 0.0) {
+    // At the beginning to log the starting conditions
+    console.log(`Starting secondPass for node: ${treeNode.value}, cumMod: ${cumMod}, depth: ${depth}`);
+
     const finalX = treeNode.x + treeNode.shift + cumMod + xOffset;
     treeNode.x = finalX;
     treeNode.y = depth * levelSeparation + yOffset;
@@ -98,29 +81,57 @@ function secondPass(treeNode, levelSeparation = 1.0, xOffset = 0.0, yOffset = 0.
         newAdjustment = Math.max(newAdjustment, secondPass(child, levelSeparation, xOffset, yOffset, cumMod + treeNode.mod + treeNode.shift, depth + 1, newAdjustment));
     });
 
+    // Before returning newAdjustment
+    console.log(`Final xAdjustment for node: ${treeNode.value} is ${newAdjustment}`);
+
     return newAdjustment;
 }
 
 function thirdPass(treeNode, xAdjustment) {
+    // At the start to log adjustments being applied
+    console.log(`Applying xAdjustment in thirdPass for node: ${treeNode.value}, xAdjustment: ${xAdjustment}`);
     treeNode.x += xAdjustment;
     treeNode.children.forEach(child => thirdPass(child, xAdjustment));
 }
 
+export class BaseNode {
+    constructor(value) {
+        this.value = value;
+        this.children = [];
+        this.x = 0;
+        this.y = 0;
+        this.shift = 0;
+        this.mod = 0;
+        // Additional properties for JavaScript implementation
+        this.leftSibling = null;
+        this.depth = 0; // Will be set during the tree construction or traversal
+    }
+    
+    setAttrs(attrs) {
+        Object.keys(attrs).forEach(key => {
+            this[key] = attrs[key];
+        });
+    }
+
+    getAttr(attr, defaultValue = 0) {
+        return Object.prototype.hasOwnProperty.call(this, attr) ? this[attr] : defaultValue;
+    }
+}
 // Assume a simple tree structure and function calls to visualize its usage
-class TreeNode extends BaseNode {
+export class TreeNode extends BaseNode {
     constructor(value) {
         super(value);
     }
 }
 
-// Example usage:
-let rootNode = new TreeNode('root');
-let child1 = new TreeNode('child1');
-let child2 = new TreeNode('child2');
-rootNode.children.push(child1, child2);
+// // Example usage:
+// let rootNode = new TreeNode('root');
+// let child1 = new TreeNode('child1');
+// let child2 = new TreeNode('child2');
+// rootNode.children.push(child1, child2);
 
-firstPass(rootNode);
-let xAdjustment = secondPass(rootNode);
-thirdPass(rootNode, xAdjustment);
+// firstPass(rootNode);
+// let xAdjustment = secondPass(rootNode);
+// thirdPass(rootNode, xAdjustment);
 
-console.log('Root Node:', rootNode);
+// console.log('Root Node:', rootNode);

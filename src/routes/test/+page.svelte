@@ -1,71 +1,90 @@
+<!-- src/routes/treeVisualization.svelte -->
+<script>
+    import { onMount } from 'svelte';
+    import { BaseNode, reingoldTilford } from '$lib/tree.js';
+
+    let svgContent;
+    const svgWidth = 800;
+    const svgHeight = 600;
+
+    onMount(() => {
+        const rootNode = new BaseNode('root');
+        // Example tree construction
+        const child1 = new BaseNode('child1');
+        const child2 = new BaseNode('child2');
+        rootNode.children.push(child1, child2);
+
+        console.log("Tree before running reingoldTilford:", rootNode);
+
+        // Assuming your tree logic is applied here and updates rootNode accordingly
+        reingoldTilford(rootNode);
+
+        console.log("Tree after centering:", rootNode);
+
+        // Center the tree
+        centerTree(rootNode);
+
+        // Prepare SVG content
+        svgContent = drawTreeSVG(rootNode);
+    });
+
+    function centerTree(rootNode) {
+        // Calculate bounds
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        function calculateBounds(node) {
+            if (!node) return;
+            minX = Math.min(minX, node.x);
+            maxX = Math.max(maxX, node.x);
+            minY = Math.min(minY, node.y);
+            maxY = Math.max(maxY, node.y);
+            node.children.forEach(calculateBounds);
+        }
+        calculateBounds(rootNode);
+
+        // Calculate offsets to center the tree
+        const offsetX = (svgWidth - (maxX - minX)) / 2 - minX;
+        const offsetY = (svgHeight - (maxY - minY)) / 2 - minY;
+
+        // Apply offsets
+        function applyOffsets(node) {
+            if (!node) return;
+            node.x += offsetX;
+            node.y += offsetY;
+            node.children.forEach(applyOffsets);
+        }
+        applyOffsets(rootNode);
+    }
+
+    // Function to generate SVG content from the tree structure
+    function drawTreeSVG(node) {
+        let content = '';
+        if (node) {
+            console.log(`Drawing node: ${node.value}, x: ${node.x}, y: ${node.y}`);
+            // Draw node
+            content += `<circle cx="${node.x}" cy="${node.y}" r="20" stroke="black" stroke-width="2" fill="white" />`;
+            content += `<text x="${node.x}" y="${node.y}" dominant-baseline="middle" text-anchor="middle">${node.value}</text>`;
+            // Draw edges and children
+            node.children.forEach(child => {
+                content += `<line x1="${node.x}" y1="${node.y}" x2="${child.x}" y2="${child.y}" stroke="black"/>`;
+                content += drawTreeSVG(child);
+            });
+        }
+        return content;
+    }
+</script>
+
 <style>
-
-.node circle {
-  fill: #fff;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-
-.node {
-  font: 10px sans-serif;
-}
-
-.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.5px;
-}
-
+    .svg-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Use the full viewport height */
+    }
 </style>
 
-<body></body>
-
-<script>
-import * as d3 from 'd3';
-
-var width = 960,
-    height = 2000;
-
-var tree = d3.layout.tree()
-    .size([height, width - 160]);
-
-var diagonal = d3.svg.diagonal()
-    .projection(function(d) { return [d.y, d.x]; });
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(40,0)");
-
-d3.json("/mbostock/raw/4063550/flare.json", function(error, json) {
-  if (error) throw error;
-  json = {"title":"root","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":{"name":35}},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":{"name":19}}]},{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":{"name":35}},{"name":"vertex","children":[{"name":"vertex","children":{"name":19}},{"name":"vertex","children":{"name":35}}]}]},{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":{"name":35}},{"name":"vertex","children":{"name":35}}]},{"name":"vertex","children":[{"name":"vertex","children":{"name":35}},{"name":"vertex","children":{"name":35}}]}]}]},{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":{"name":51}},{"name":"vertex","children":{"name":51}}]},{"name":"vertex","children":[{"name":"vertex","children":{"name":51}},{"name":"vertex","children":{"name":51}}]}]}]}]},{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":[{"name":"vertex","children":{"name":51}},{"name":"vertex","children":{"name":51}}]},{"name":"vertex","children":[{"name":"vertex","children":{"name":51}},{"name":"vertex","children":{"name":67}}]}]},{"name":"vertex","children":[{"name":"vertex","children":{"name":67}},{"name":"vertex","children":{"name":6}}]}]}]},{"name":"vertex","children":{"name":20}}]};
-  var nodes = tree.nodes(json),
-      links = tree.links(nodes);
-
-  var link = svg.selectAll("path.link")
-      .data(links)
-    .enter().append("path")
-      .attr("class", "link")
-      .attr("d", diagonal);
-
-  var node = svg.selectAll("g.node")
-      .data(nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
-
-  node.append("circle")
-      .attr("r", 4.5);
-
-  node.append("text")
-      .attr("dx", function(d) { return d.children ? -8 : 8; })
-      .attr("dy", 3)
-      .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
-      .text(function(d) { return d.name; });
-});
-
-d3.select(self.frameElement).style("height", height + "px");
-
-</script>
+<div class="svg-container">
+    <svg width={svgWidth} height={svgHeight}>
+        {@html svgContent}
+    </svg>
+</div>
+  

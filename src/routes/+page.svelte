@@ -41,7 +41,8 @@
         </div>
         <div class="col-md-4">
             <a href="/canvas">Test Canvas</a>
-            <a href="/test">treetest</a>
+            <a href="/test">reingoldTilford</a>
+            <a href="/treelayout">treeLayout</a>
         </div>
     </div>
 
