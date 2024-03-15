@@ -1,7 +1,7 @@
 <script>
     import { tweened } from 'svelte/motion';
     import 'svelte/easing';
-    import Frequencies from '../lib/Frequencies.svelte';
+    import Frequencies from '../lib/components/Frequencies.svelte';
 	import { cubicInOut } from 'svelte/easing';
     
     let userInput = '';
@@ -40,9 +40,9 @@
             <h1 class="text-center">Huffman Coding Visualization</h1>
         </div>
         <div class="col-md-4">
-            <a href="/canvas">Test Canvas</a>
-            <a href="/test">reingoldTilford</a>
-            <a href="/treelayout">treeLayout</a>
+            <a href="/test/canvas">Test Canvas</a>
+            <a href="/test/reingold">reingoldTilford</a>
+            <a href="/test/d3tree">d3 tree</a>
         </div>
     </div>
 

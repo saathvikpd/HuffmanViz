@@ -1,5 +1,5 @@
 <script>
-    import Node from './Node.svelte';
+    import Node from './components/Node.svelte';
   
     export let nodes = [];
     export let edges = []; // Assuming edges are defined by pairs of positions for simplicity
