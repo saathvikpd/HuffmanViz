@@ -150,9 +150,9 @@
     }
 
     // Watch for sort event
-    $: if (isSorted) {
-        updateHistogram(true); // Pass true to enable animations
-    }
+    // $: if (isSorted) {
+    //     updateHistogram(true); // Pass true to enable animations
+    // }
 </script>
 
 <button type="button" class="btn btn-primary btn-sm" on:click={sortFrequencies} disabled={isSorted}>Sort Frequencies</button>
@@ -160,5 +160,5 @@
 <svg id="frequency-chart" width="400"></svg>
 
 <style>
-    
+
 </style>

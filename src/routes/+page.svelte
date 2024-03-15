@@ -1,22 +1,26 @@
 <script>
     import { tweened } from 'svelte/motion';
-    import { cubicOut } from 'svelte/easing';
+    import 'svelte/easing';
     import Frequencies from '../components/Frequencies.svelte';
+	import { backInOut, circInOut, cubicInOut, quintInOut } from 'svelte/easing';
+    
     let userInput = '';
     let inputLocked = false;
 
-    const position = tweened(0, { // Start in the center (50% of the parent width)
-        duration: 400,
-        easing: cubicOut
+
+    // Position for animating the column. Starting from 100% (centered),
+    // we'll animate this to 33% to move to the left side.
+    const position = tweened(33, {
+        duration: 750,
+        delay: 1000,
+        easing: cubicInOut
     });
 
     // Handle the lockInput event from Frequencies component
     function handleInputLock(event) {
         inputLocked = event.detail;
         if (inputLocked) {
-            position.set(0); // Move to the left (0% of the parent width)
-        } else {
-            position.set(50); // Return to the center
+            position.set(0); // Animate to move to the left
         }
     }
 
@@ -33,8 +37,8 @@
             <h1 class="text-center">Huffman Coding Visualization</h1>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-4" style="transform: translateX({$position}%);">
+    <div class="row justify-content-center" style="transform: translateX({$position}%)">
+        <div class="col-md-4">
             <div class="d-flex flex-column align-items-center">
                 <textarea 
                     class="text-input form-control mb-3" 
@@ -42,15 +46,12 @@
                     placeholder="Type some text here..." 
                     disabled={inputLocked}
                 ></textarea>
-                <Frequencies {userInput} on:lockInput={handleInputLock} />
+                <Frequencies {userInput} on:lockInput={handleInputLock}/>
             </div>
         </div>
-        {#if inputLocked}
-            <!-- This div takes up the remaining space when input is locked -->
-            <div class="col-md-8">
-                <!-- Content for the remaining 2/3 of the page goes here -->
-            </div>
-        {/if}
+        <div class="col-md-8">
+            <p class="text-center">Tree Here</p>
+        </div>
     </div>
 </div>
 
@@ -80,7 +81,5 @@
     .float-start {
         margin-right: 1rem;
     }
-    .row {
-        transition: margin-left 0.5s ease-in-out;
-    }
+
 </style>
