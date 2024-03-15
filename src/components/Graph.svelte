@@ -18,8 +18,6 @@
     items: [] // sorted counts of the form [key (letter), count]. [list]
   };
 
-  let sectionText;
-
   let zeropos = []
   let onepos = []
 
