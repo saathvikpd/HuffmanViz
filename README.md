@@ -1,38 +1,38 @@
-# create-svelte
+# Huffman Encoding Visualization 🌐
 
-## Generate static site using svelte SSG
+Welcome to the Huffman Encoding Visualization project! This interactive web experience is designed to teach and demonstrate the fascinating process of Huffman encoding, an efficient method of compressing data. Perfect for students, educators, and anyone curious about data compression techniques.
 
-To assist you in creating a static webpage for GitHub Pages using Svelte, we have developed a template for you: [ShaokangJiang/svelte-template (github.com)](https://github.com/ShaokangJiang/svelte-template).
+## About 📖
 
-Please follow the link provided, and initiate the creation of a new repository.
+Huffman encoding is a popular algorithm used for lossless data compression. It assigns variable-length codes to input characters, with shorter codes assigned to more frequent characters. This project visualizes each step of the Huffman encoding process, from analyzing character frequency in your input text to building the Huffman tree and generating the encoded output.
 
-![image-20240210175403813](./assets/image-20240210175403813.png)
+Dive into the visualization by entering your text, and watch as the algorithm dynamically creates a visual representation of the Huffman encoding process. The length and complexity of the visualization adapt in real time to your input, making each experience unique!
 
-After GitHub completes the cloning process, navigate to the settings page. On the left panel, under the "Pages" tab, locate the "Source" section and select "GitHub Actions" as the source. 
+### Features 🌟
 
-Clone this repository and proceed with your work. Upon completion, commit and push your changes. The corresponding GitHub Actions will then execute, building a static website hosted at `https://your-username.github.io/your-repo-name` for you.
+- **Interactive Text Input**: Enter any text to see how it's compressed using Huffman encoding.
+- **Dynamic Visualization**: Watch as the characters are counted, sorted, and then organized into a Huffman tree right before your eyes.
+- **Educational Journey**: Learn about Huffman encoding through a step-by-step visual guide.
+- **Responsive Design**: Enjoy the experience on any device, desktop or mobile.
 
-![image-20240210175104365](./assets/image-20240210175104365.png)
+## Contributors 👥
 
-### Migrate from your project
+- **Kai Breese**
+- **Justin Huang**
+- **Saathvik Dirisala**
 
-If you have started on the project and want to switch to using this template, you can copy your `src` folder, go to the local clone of your version of this template, then paste it. When it says the file exists, simply click replace, and you can continue working on your version of this template.
+A huge thank you to our contributors for making this project possible! 🎉
 
-## Setup
+## Project Link 🔗
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Get started with the Huffman Encoding Visualization experience [here](https://saathvikpd.github.io/finalproject/)!
 
-```bash
-npm run dev
+Dive in and explore the intricacies of Huffman encoding through this interactive and educational web experience. Enjoy learning!
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## License 📜
 
-## Building static site
+This project is open source and available under the [MIT License](LICENSE).
 
-Just push to github. 
+---
 
-## Published site
-
-https://saathvikpd.github.io/finalproject/
+Happy Encoding! 😊
