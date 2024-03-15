@@ -1,8 +1,8 @@
 <script>
     import { tweened } from 'svelte/motion';
     import 'svelte/easing';
-    import Frequencies from '../components/Frequencies.svelte';
-	import { backInOut, circInOut, cubicInOut, quintInOut } from 'svelte/easing';
+    import Frequencies from '../lib/Frequencies.svelte';
+	import { cubicInOut } from 'svelte/easing';
     
     let userInput = '';
     let inputLocked = false;
@@ -31,12 +31,20 @@
 
 
 <div class="container-fluid">
-    <div class="row mb-3">
-        <div class="col-12">
+
+    <div class="row mb-3 align-items-start">
+        <div class="col-md-4">
             <button type="button" class="btn btn-outline-danger btn-sm float-start" on:click={reset}>Reset</button>
+        </div>
+        <div class="col-md-4">
             <h1 class="text-center">Huffman Coding Visualization</h1>
         </div>
+        <div class="col-md-4">
+            <a href="/canvas">Test Canvas</a>
+            <a href="/test">treetest</a>
+        </div>
     </div>
+
     <div class="row justify-content-center" style="transform: translateX({$position}%)">
         <div class="col-md-4">
             <div class="d-flex flex-column align-items-center">
@@ -53,6 +61,7 @@
             <p class="text-center">Tree Here</p>
         </div>
     </div>
+
 </div>
 
   
@@ -70,7 +79,6 @@
         border-radius: 8px;
         padding: 10px;
         font-size: 1em;
-        border: 1px solid #000000;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
@@ -81,5 +89,10 @@
     .float-start {
         margin-right: 1rem;
     }
-
+    
+	:global(body) {
+		background-color: #f2eee2;
+		color: #001221;
+		transition: background-color 0.3s
+	}
 </style>

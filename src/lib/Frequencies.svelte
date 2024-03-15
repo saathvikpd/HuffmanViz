@@ -1,5 +1,5 @@
 <script>
-    import { onMount, createEventDispatcher } from 'svelte';
+    import { createEventDispatcher } from 'svelte';
     import * as d3 from 'd3';
   
     export let userInput;
@@ -149,10 +149,6 @@
         updateHistogram();
     }
 
-    // Watch for sort event
-    // $: if (isSorted) {
-    //     updateHistogram(true); // Pass true to enable animations
-    // }
 </script>
 
 <button type="button" class="btn btn-primary btn-sm" on:click={sortFrequencies} disabled={isSorted}>Sort Frequencies</button>
