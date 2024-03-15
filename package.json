@@ -11,13 +11,7 @@
 		"test": "jest src",
 		"test:watch": "npm run test -- --watch"
 	},
-	"jest": {
-	"transform": {
-		"^.+\\.js$": "babel-jest",
-		"^.+\\.svelte$": "svelte-jester"
-	},
-	"moduleFileExtensions": ["js", "svelte"]
-	},
+
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
