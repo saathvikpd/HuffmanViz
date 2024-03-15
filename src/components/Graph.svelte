@@ -18,12 +18,21 @@
     items: [] // sorted counts of the form [key (letter), count]. [list]
   };
 
-  let nodes = {};
-  let node_counter = 0;
+  let sectionText;
 
+  let zeropos = []
+  let onepos = []
+
+  for (let i = 0; i < 9; i++) {
+    zeropos.push([0,0])
+    onepos.push([0,0])
+  }
+  let encodings = ["0110", "101", "0111", "101", "001", "110", "111", "1000", "010", "1001", "111", "010", "001", "111", "000", "101", "110", "110"];
+
+
+  let start = (width / 2) - 100;
   
-  let start;
-  $: start = (width / 2) - 100;
+  
   let x_pos = [];
   let y_pos = [];
   for (let i = 0; i < obj.sentence.length; i++) {
@@ -38,6 +47,7 @@
   };
 
   let counter = 0;
+  
 
   let sent = obj.sentence;
   for (let l = 0; l < sent.length; l++) {
@@ -70,7 +80,19 @@
     tweenOptions
   );
 
+  const tweenedZero = tweened(
+    zeropos,
+    tweenOptions
+  )
+
+  const tweenedOne = tweened(
+    onepos,
+    tweenOptions
+  )
+
+
   $: {
+    start = (width / 2) - 100;
     if (index === 0) {
       
       x_pos = [];
@@ -81,15 +103,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-       sectionText = [
-    "Section 1",
-    "Huffman encoding is a compression algorithm",
-    "made to compress data that are larger, primarily comprised of characters",
-    "which take up 4 bytes. It converts it into bits, where characters dependent",
-    "on their frequency are represented by 0 and 1s.",
-    "An example given is dsc 106."
-  ];
-  let sectionId = "";
+      sectionText = "Huffman encoding is a compression algorithm made to compress data that are large and primarily comprised of characters that take up 4 bytes. It converts data into bits where characters dependent on their frequency are represented by 0s and 1s. \n\nHere, we will be exploring the algorithm using the example phrase: data_science_class.\n\n Click the 'Next' and 'Prev' buttons to explore the formation of a Huffman Tree, step-by-step.";
 
     }
 
@@ -126,7 +140,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-      sectionText = "Section 2";
+      sectionText = "Grabs the counts for each character";
 
     }
 
@@ -173,10 +187,9 @@
         x_pos.push(start + 50)
         y_pos.push(250 + (20 * obj.index[obj.lst[obj.order[i]]]));
       }
-      console.log(obj.order);
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-      sectionText = "Section 3";
+      sectionText = "Sorts the counts for each character in increasing order";
     }
 
     if (index === 3) {
@@ -206,6 +219,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Builds the first node in our tree by combining the counts for the two lowest-frequency characters, like so...";
     }
 
     if (index === 4) {
@@ -237,7 +251,8 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-      console.log(y_pos)
+      sectionText = "Sorts the new node based on the combined frequency of its children";
+
     }
 
     if (index === 5) {
@@ -268,7 +283,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-      console.log(y_pos)
+      sectionText = "Repeats the process with the next two with the lowest frequencies";
     }
 
     if (index === 6) {
@@ -299,7 +314,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-
+      sectionText = "Once again, the new node is sorted";
     }
 
     if (index === 7) {
@@ -335,6 +350,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Once again, lowest two are combined";
     }
 
     if (index === 8) {
@@ -369,6 +385,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Sorted....";
 
     }
 
@@ -410,6 +427,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Here, the lowest frequency character and one of the nodes we just created are combined into a tiny tree";
     }
 
     if (index === 10) {
@@ -450,6 +468,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Similar to our previous steps, the tiny tree is sorted";
 
     }
 
@@ -496,6 +515,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "The same process of forming a tiny tree is repeated";
     }
 
     if (index === 12) {
@@ -543,7 +563,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-
+      sectionText = "Once again, it's sorted";
     }
 
     if (index === 13) {
@@ -591,6 +611,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Combine next two components";
     }
 
     if (index === 14) {
@@ -638,6 +659,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Sort the new component";
 
     }
 
@@ -692,6 +714,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "Combine the next two components";
 
     }
 
@@ -746,7 +769,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-
+      sectionText = "Sort the new component";
     }
 
     if (index === 17) {
@@ -802,7 +825,7 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-
+      sectionText = "Combine the next 2";
     }
 
     if (index === 18) {
@@ -858,10 +881,10 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
-
+      sectionText = "Sort!";
     }
 
-    if (index === 19) {
+    if (index >= 19) {
 
       obj.index["l"] = 16;
       obj.index["_"] = 16;
@@ -914,7 +937,36 @@
       }
       $tweenedX = x_pos;
       $tweenedY = y_pos;
+      sectionText = "And, finally, we combine the two trees into one gigantic tree to form our Huffman Tree";
+    }
 
+    if (index === 20) {
+
+      zeropos = [[$tweenedX[4] + 300, $tweenedY[4] - 330],
+                 [$tweenedX[4], $tweenedY[4] - 130],
+                 [$tweenedX[4] + 700, $tweenedY[4] - 130],
+                 [$tweenedX[4] - 75, $tweenedY[4] - 40],
+                 [$tweenedX[4] + 200, $tweenedY[4] - 20],
+                 [$tweenedX[4] + 600, $tweenedY[4] - 20],
+                 [$tweenedX[4] + 925, $tweenedY[4] - 40],
+                 [$tweenedX[4] + 330, $tweenedY[4] + 70],
+                 [$tweenedX[4] + 530, $tweenedY[4] + 70]];
+      onepos = [[$tweenedX[4] + 635, $tweenedY[4] - 330],
+                [$tweenedX[4] + 230, $tweenedY[4] - 130],
+                [$tweenedX[4] + 920, $tweenedY[4] - 130],
+                [$tweenedX[4] + 5, $tweenedY[4] - 40],
+                [$tweenedX[4] + 330, $tweenedY[4] - 20],
+                [$tweenedX[4] + 730, $tweenedY[4] - 20],
+                [$tweenedX[4] + 1000, $tweenedY[4] - 40],
+                [$tweenedX[4] + 400, $tweenedY[4] + 70],
+                [$tweenedX[4] + 600, $tweenedY[4] + 70]];
+      $tweenedZero = zeropos;
+      $tweenedOne = onepos;
+
+      console.log($tweenedZero);
+      console.log($tweenedOne);
+
+      sectionText = "Now, we use this tree to encode each character.\n\n We go down the tree, adding 0 for a left traversal and 1 for a right traversal.";
     }
 
 
@@ -1307,7 +1359,62 @@
     </text>
   {/if}
 
+  {#if index > 19}
+    {#each {length: 9} as _ , i}
+      <text
+        x={$tweenedOne[i][0]}
+        y={$tweenedOne[i][1]}
+        in:fly={{x: 300, duration: 400}}
+        out:fly={{x: 300, duration: 400}}
+      >
+        1
+      </text>
+
+      <text
+      x={$tweenedZero[i][0]}
+      y={$tweenedZero[i][1]}
+        in:fly={{x: 300, duration: 400}}
+        out:fly={{x: 300, duration: 400}}
+      >
+        0
+      </text>
+
+    {/each}
+
+    {#each {length: 18} as _, i}
+
+      <text
+        x={$tweenedX[i] + 10}
+        y={$tweenedY[i] + 30}
+        in:fly={{x: -300, duration: 200}}
+        out:fly={{x: -300, duration: 200}}
+      >
+        ({encodings[i]})
+      </text>
+    {/each}
+    
+  {/if}
+  
+  
+
 </svg>
+
+<h1
+  class="sectionHeader"
+>
+  {#if index === 0}
+    Introduction
+  {/if}
+  {#if index > 0}
+    Step {index} (Read Me!) 
+  {/if}
+</h1>
+<p
+  class="sectionText"
+>
+  {sectionText}
+</p>
+
 <style>
     .scrollable-container {
       max-height: 100px; /* Set the maximum height of the container */
@@ -1319,9 +1426,18 @@
       margin-bottom: 8px; /* Add some margin between lines */
     }
     .sectionText {
+      width: 20%;
+      fill: black;
       font-size: 20px;
-      fill: black; /* Set the text color */
-      white-space: pre-line
+      white-space: pre-line;
+      position: relative;
+      left: 20px;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    .sectionHeader {
+      position: relative;
+      left: 20px;
+      font-family: 'Times New Roman', Times, serif;
     }
     .graph {
       width: 100%; /* Hello testing*/

@@ -7,13 +7,14 @@
 
 
   let count, offset, progress;
-  let width, height;
+  let width;
+  let height;
 
   let index = 0;
   function incrementCount() {
 		index++;
-    if (index > 19) {
-      index = 19;
+    if (index > 20) {
+      index = 20;
     }
 	}
 
@@ -24,11 +25,12 @@
     }
   }
 
-  
-  let outerWidth, innerWidth, outerHeight, innerHeight;
+  let outerWidth = 1000; 
+  let innerWidth, outerHeight, innerHeight;
 
   
   $: {
+    console.log(outerWidth)
     width = outerWidth;
     index = index;
   }
@@ -40,20 +42,21 @@
 <main>
 
   <div
-    class="button"
+    class="buttonDiv"
   >
     <h1>
-      Huffman Tree
+      Huffman Trees
     </h1>
   </div>
 
   <div
-    class="button"
+    class="buttonDiv"
   >
 
     <button
       on:click={decrementCount}
     >
+    
       Prev
     </button>
 
@@ -62,7 +65,7 @@
     >
       Next
   </button>
-   
+
 
   </div>
 
@@ -74,6 +77,8 @@
     <Graph {index} {width} {height}/>
   </div>
 
+  
+  
   
 
 </main>
@@ -88,7 +93,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		font-family: sans-serif;
+		font-family: 'Times New Roman', Times, serif;
 		background-color: rgb(229, 230, 221);
 	}
 
@@ -96,14 +101,25 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    outline: green solid 3px;
+    align-items: center
   }
 
-  .button {
+  .buttonDiv {
     display: flex;
 		align-items: center;
 		justify-content: space-between;
-    height: 60px
+    width: 210px;
+    margin: auto;
+    height: 60px;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(229, 230, 221);
+  }
+
+
+  button {
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    bottom: 5px
   }
 
   
