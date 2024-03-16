@@ -41,7 +41,6 @@
         </div>
         <div class="col-md-4">
             <a href="/test/priorityqueue/">PriorityQueueTest</a>
-            <HuffmanController />
         </div>
     </div>
 
@@ -58,7 +57,9 @@
             </div>
         </div>
         <div class="col-md-8">
-            <p class="text-center">Tree Here</p>
+            <div class="d-flex flex-column align-items-center">
+                <HuffmanController />
+            </div>
         </div>
     </div>
 

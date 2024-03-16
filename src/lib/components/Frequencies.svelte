@@ -183,14 +183,8 @@
         }
     }
 
-    // Listen for the highlight event
-    // function handleHighlight(event) {
-    //     highlightedCharacter = event.detail.character;
-    //     updateHistogram(highlightedCharacter=highlightedCharacter);
-    // }
-
 </script>
 
-<button type="button" class="btn btn-primary btn-sm" on:click={sortAndPopulateQueue} disabled={isSorted}>Sort Frequencies</button>
+<button type="button" class="btn btn-outline-primary btn-sm" on:click={sortAndPopulateQueue} disabled={isSorted}>Sort Frequencies</button>
 
 <svg id="frequency-chart" width="400"></svg>
