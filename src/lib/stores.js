@@ -102,3 +102,4 @@ function createPriorityQueue() {
 export const priorityQueueStore = createPriorityQueue();
 
 export const highlightTopBar = writable(false);
+export const highlightSecondBar = writable(false);
