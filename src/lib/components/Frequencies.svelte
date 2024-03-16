@@ -46,7 +46,6 @@
             data = newData;
             updateHistogram();
         }
-        console.log("Priority queue updated.");
     });
     
     // React to userInput changes
