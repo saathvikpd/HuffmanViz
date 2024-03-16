@@ -8,7 +8,7 @@
 		"preview": "vite preview",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"test": "jest src",
+		"test": "jest",
 		"test:watch": "npm run test -- --watch"
 	},
 	"devDependencies": {
