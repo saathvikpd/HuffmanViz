@@ -1,4 +1,4 @@
-import PriorityQueue from './PriorityQueue';
+import PriorityQueue from '../src/lib/modules/PriorityQueue';
 
 describe('PriorityQueue', () => {
   let pq;

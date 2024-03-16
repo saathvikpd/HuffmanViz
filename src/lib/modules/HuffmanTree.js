@@ -1,14 +1,5 @@
-import { PriorityQueue } from './PriorityQueue';
-
-class TreeNode {
-    constructor(character, frequency, left = null, right = null) {
-        this.character = character;
-        this.frequency = frequency;
-        this.left = left;
-        this.right = right;
-        this.isLeaf = !(left || right); // true for leaf, false for internal node
-    }
-}
+import PriorityQueue from './PriorityQueue';
+import TreeNode from './TreeNode';
 
 class HuffmanTree {
     constructor(frequencies) {

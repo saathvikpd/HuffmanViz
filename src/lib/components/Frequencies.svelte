@@ -1,6 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import * as d3 from 'd3';
+    import { priorityQueueStore } from '$lib/modules/PriorityQueueStore.js';
   
     export let userInput;
     const dispatch = createEventDispatcher();
@@ -20,9 +21,9 @@
 
     // Function to sort frequencies in descending order
     function sortFrequencies() {
-        isSorted = true;
         dispatch('lockInput', true); // Dispatch event to lock the input box
         data.sort((a, b) => a.frequency - b.frequency);
+        isSorted = true;
         updateHistogram();
     }
   
@@ -143,18 +144,27 @@
     }
 
 
-    // React to userInput changes, but don't animate immediately
+    // React to userInput changes
     $: if (userInput && !isSorted) {
         data = calculateFrequencies(userInput);
         updateHistogram();
     }
 
+    // In PriorityQueue or as a standalone function
+    function convertQueueToArray(queueStore) {
+        let convertedArray = [];
+        queueStore.items.subscribe(items => {
+            convertedArray = items.map(item => ({
+                character: item.character,
+                frequency: item.frequency
+            }));
+        });
+        return convertedArray;
+    }
+
 </script>
+
 
 <button type="button" class="btn btn-primary btn-sm" on:click={sortFrequencies} disabled={isSorted}>Sort Frequencies</button>
 
 <svg id="frequency-chart" width="400"></svg>
-
-<style>
-
-</style>

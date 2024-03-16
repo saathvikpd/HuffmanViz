@@ -40,9 +40,7 @@
             <h1 class="text-center">Huffman Coding Visualization</h1>
         </div>
         <div class="col-md-4">
-            <a href="/test/canvas">Test Canvas</a>
-            <a href="/test/reingold">reingoldTilford</a>
-            <a href="/test/d3tree">d3 tree</a>
+            <a href="/test/priorityqueue/">PriorityQueueTest</a>
         </div>
     </div>
 
