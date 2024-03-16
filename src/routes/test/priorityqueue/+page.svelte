@@ -1,5 +1,5 @@
 <script>
-  import { priorityQueueStore } from '$lib/modules/PriorityQueueStore.js';
+  import { priorityQueueStore } from '$lib/stores.js';
 
   let newItemCharacter = '';
   let newItemFrequency = 0;

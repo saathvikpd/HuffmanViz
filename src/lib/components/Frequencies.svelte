@@ -1,12 +1,12 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import * as d3 from 'd3';
-    import { priorityQueueStore } from '$lib/modules/PriorityQueueStore.js';
+    import { priorityQueueStore, highlightTopBar } from '$lib/stores.js';
+    import { TreeNode } from '$lib/modules/TreeNode.js';
   
     export let userInput;
     const dispatch = createEventDispatcher();
     let isSorted = false;
-
     let data = calculateFrequencies(userInput);
 
     // Function to calculate and return character frequencies in order of appearance
@@ -19,14 +19,44 @@
         return Array.from(freqMap.entries()).map(([character, frequency]) => ({ character, frequency }));
     }
 
+    // Populate the priority queue with TreeNode objects
+    function populatePriorityQueue() {
+        console.log("Populating priority queue with frequency data...");
+        data.forEach(({ character, frequency }) => {
+            const node = new TreeNode(character, frequency);
+            priorityQueueStore.insert(node);
+            console.log(`Inserted ${character}: ${frequency}`);
+        });
+        console.log("Priority queue populated.");
+    }
+
     // Function to sort frequencies in descending order
-    function sortFrequencies() {
+    function sortAndPopulateQueue() {
         dispatch('lockInput', true); // Dispatch event to lock the input box
         data.sort((a, b) => a.frequency - b.frequency);
         isSorted = true;
+        populatePriorityQueue();
         updateHistogram();
     }
-  
+
+    // React to changes in the priority queue and update the histogram accordingly
+    $: priorityQueueStore.subscribe(queue => {
+        const newData = queue.map(node => ({ character: node.character, frequency: node.frequency }));
+        if (JSON.stringify(newData) !== JSON.stringify(data)) {
+            data = newData;
+            updateHistogram();
+        }
+        console.log("Priority queue updated.");
+    });
+    
+    // React to userInput changes
+    $: if (userInput && !isSorted) {
+        data = calculateFrequencies(userInput);
+        updateHistogram();
+    }
+
+    $: $highlightTopBar, updateHistogram();
+
     function updateHistogram() {
         if (data.length === 0) return;
         
@@ -141,30 +171,26 @@
                 .text(d => d.character)), // Animate label changes
             exit => exit.remove()
         );
+
+        // Additional logic to highlight the top bar if shouldHighlightTopBar is true
+        if ($highlightTopBar) {
+            svg.selectAll('.bar')
+                .each(function(d, i) {
+                if (i === 0) { // Assuming the data is already sorted, highlight the first bar
+                    d3.select(this).style('fill', 'red');
+                }
+                });
+        }
     }
 
-
-    // React to userInput changes
-    $: if (userInput && !isSorted) {
-        data = calculateFrequencies(userInput);
-        updateHistogram();
-    }
-
-    // In PriorityQueue or as a standalone function
-    function convertQueueToArray(queueStore) {
-        let convertedArray = [];
-        queueStore.items.subscribe(items => {
-            convertedArray = items.map(item => ({
-                character: item.character,
-                frequency: item.frequency
-            }));
-        });
-        return convertedArray;
-    }
+    // Listen for the highlight event
+    // function handleHighlight(event) {
+    //     highlightedCharacter = event.detail.character;
+    //     updateHistogram(highlightedCharacter=highlightedCharacter);
+    // }
 
 </script>
 
-
-<button type="button" class="btn btn-primary btn-sm" on:click={sortFrequencies} disabled={isSorted}>Sort Frequencies</button>
+<button type="button" class="btn btn-primary btn-sm" on:click={sortAndPopulateQueue} disabled={isSorted}>Sort Frequencies</button>
 
 <svg id="frequency-chart" width="400"></svg>

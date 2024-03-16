@@ -1,4 +1,4 @@
-import PriorityQueue from './PriorityQueue';
+import PriorityQueue from './PriorityQueueStore';
 import TreeNode from './TreeNode';
 
 class HuffmanTree {

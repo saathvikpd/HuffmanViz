@@ -1,6 +1,4 @@
-import { writable } from 'svelte/store';
-/*
- * Custom Svelte Store: PriorityQueue
+/* * Custom Svelte Store: PriorityQueue
  * 
  * The PriorityQueue store is designed to manage a collection of items sorted by a specified priority.
  * In this implementation, each item is an object with at least a 'frequency' property, which determines its priority.
@@ -48,7 +46,7 @@ import { writable } from 'svelte/store';
  *  - The `extractMin` method's direct use may need adaptation in Svelte components due to the async nature of store updates.
  *  - Ensure to handle the potential asynchronous nature of extracting and using items from the store in your components.
  */
-
+import { writable } from 'svelte/store';
 
 function createPriorityQueue() {
     const { subscribe, set, update } = writable([]);
@@ -102,3 +100,5 @@ function createPriorityQueue() {
 }
 
 export const priorityQueueStore = createPriorityQueue();
+
+export const highlightTopBar = writable(false);

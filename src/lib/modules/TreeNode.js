@@ -1,4 +1,4 @@
-export default class TreeNode {
+export class TreeNode {
     constructor(character, frequency, left = null, right = null) {
         this.character = character;
         this.frequency = frequency;

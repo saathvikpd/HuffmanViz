@@ -1,8 +1,8 @@
 <script>
     import { tweened } from 'svelte/motion';
-    import 'svelte/easing';
-    import Frequencies from '../lib/components/Frequencies.svelte';
 	import { cubicInOut } from 'svelte/easing';
+    import Frequencies from '$lib/components/Frequencies.svelte';
+    import HuffmanController from '$lib/components/HuffmanController.svelte';
     
     let userInput = '';
     let inputLocked = false;
@@ -41,6 +41,7 @@
         </div>
         <div class="col-md-4">
             <a href="/test/priorityqueue/">PriorityQueueTest</a>
+            <HuffmanController />
         </div>
     </div>
 
