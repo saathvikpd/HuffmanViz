@@ -520,16 +520,16 @@
 
 
       
-      obj.index["s"] = 0;
-      obj.index["c"] = 1;
-      obj.index["l"] = 5.5;
-      obj.index["_"] = 5.5;
-      obj.index["e"] = 13;
-      obj.index["d"] = 16;
-      obj.index["t"] = 16;
-      obj.index["i"] = 25;
-      obj.index["n"] = 25;
-      obj.index["a"] = 22;
+      obj.index["s"] = -3;
+      obj.index["c"] = -2;
+      obj.index["l"] = 2.5;
+      obj.index["_"] = 2.5;
+      obj.index["e"] = 10;
+      obj.index["d"] = 13;
+      obj.index["t"] = 13;
+      obj.index["i"] = 22;
+      obj.index["n"] = 22;
+      obj.index["a"] = 19;
       
       x_pos = [];
       y_pos = [];
