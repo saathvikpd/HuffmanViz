@@ -1035,6 +1035,8 @@
     >
       2
     </text>
+
+
   {/if}
 
   {#if index > 4}
@@ -1390,6 +1392,8 @@
         ({encodings[i]})
       </text>
     {/each}
+
+   
     
   {/if}
   

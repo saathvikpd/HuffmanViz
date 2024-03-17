@@ -79,7 +79,7 @@
 
   
   
-  
+<a href="js/index.html" target="_blank" class="link">Go to js/index.html</a>
 
 </main>
 

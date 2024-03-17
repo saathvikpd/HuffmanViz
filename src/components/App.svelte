@@ -53,6 +53,7 @@
     {#if huffmanTree}
       <Graph {huffmanTree} />
     {/if}
+    <a href="js/index.html" target="_blank">Go to js/index.html</a>
   </main>
 
 <style>
