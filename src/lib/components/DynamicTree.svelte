@@ -106,6 +106,7 @@
       children: (node.left || node.right) ? [node.left, node.right].filter(n => n).map(child => generateTreeJson(child)) : [],
     };
   }
+
 </script>
 
 <svg bind:this={svg} width="800" height="600" style="border: 1px solid black;"></svg>

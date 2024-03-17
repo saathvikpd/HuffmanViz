@@ -3,10 +3,11 @@
 	import { cubicInOut } from 'svelte/easing';
     import Frequencies from '$lib/components/Frequencies.svelte';
     import HuffmanController from '$lib/components/HuffmanController.svelte';
+    import Encoding from '$lib/components/Encoding.svelte';
     
     let userInput = '';
     let inputLocked = false;
-
+    let sortedFrequencies = false;
 
     // Position for animating the column. Starting from 100% (centered),
     // we'll animate this to 33% to move to the left side.
@@ -28,8 +29,9 @@
         window.location.reload();
     }
 
-   
-
+    function sortFrequencies() {
+        sortedFrequencies = true;
+    }
 
     function validateInput(event) {
         const inputValue = event.target.value;
@@ -39,6 +41,14 @@
             // If the input contains characters other than letters
             // Remove those characters from the input
             event.target.value = inputValue.replace(/[^a-zA-Z]/g, '');
+        }
+    }
+
+    // Function to check if userInput has only one unique letter
+    function checkUniqueLetter() {
+        const uniqueLetters = new Set(userInput.toLowerCase().replace(/[^a-z]/g, ''));
+        if (uniqueLetters.size === 1) {
+            alert("Please enter multiple unique letters.");
         }
     }
 </script>
@@ -77,8 +87,20 @@
             </div>
         </div>
     </div>
-
+    <div class="row justify-content-center">
+        <div class = "col-md-8">
+            <div class="d-flex flex-column align-items-center">
+                <Encoding {userInput}/>
+            </div>
+        </div>
+        
+            
+    </div>
 </div>
+
+
+
+
 
   
 <style>

@@ -1,5 +1,6 @@
 export class TreeNode {
     constructor(character, frequency, left = null, right = null, parent = null) {
+        this.code = '';
         this.character = character;
         this.frequency = frequency;
         this.left = left;

@@ -3,6 +3,7 @@ import TreeNode from './TreeNode';
 
 class HuffmanTree {
     constructor(frequencies) {
+        this.codes = []
         this.priorityQueue = new PriorityQueue();
         this.waitingRoom = []; // Reference for visualization, not for logical tree construction
         this.currentNodes = { left: null, right: null }; // Tracks nodes for current operation
@@ -67,5 +68,45 @@ class HuffmanTree {
         }
     }
 }
+
+    class HuffmanCode {
+        constructor(c, freq, code) {
+            this.c = c;
+            this.freq = freq;
+            this.code = code;
+        }
+    }
+    
+    function getCodes(root, s, codes) {
+        if (root.left == null && root.right == null) {
+            let huffCode = new HuffmanCode(root.c, root.data, s);
+            codes.push(huffCode);
+            return;
+        }
+        getCodes(root.left, s + "0", codes);
+        getCodes(root.right, s + "1", codes);
+    }
+    
+    function generateHuffmanCode(userText, root) {
+        let huffmanCodes = [];
+        getCodes(root, "", huffmanCodes);
+    
+        let encryptedText = "";
+        let i = 0;
+        while (i < userText.length) {
+            let char = userText[i];
+            let huffmanCode = huffmanCodes.find(code => code.c === char);
+            if (huffmanCode) {
+                encryptedText += huffmanCode.code;
+            } else {
+                encryptedText += char;
+            }
+            i++;
+        }
+    
+        return encryptedText;
+    }
+    
+     
 
 export default HuffmanTree;
