@@ -42,6 +42,10 @@ class HuffmanNode {
             return root;
         }
 
+        printCode(root, depth, codes){        
+            getCodes(root, "", codes);
+        }
+
 
     }
 function HuffmanCode(c, freq, code){
@@ -80,7 +84,15 @@ function generateHuffmanCode(userText, root) {
     return encryptedText;
 }
 
+
+let treeDetails = [];
+let codes = [];
+
+
+
 function runHuffman() {
+    treeDetails = [];
+    codes = [];
     let huffmanQueue = [];
     let txt = userInput;
     const huffman = new HuffmanNode();
@@ -103,16 +115,49 @@ function runHuffman() {
     }
 
     let root = huffman.buildTree(huffmanQueue);
+    getCodes(root, "", codes)
     let encoded_txt = generateHuffmanCode(txt, root);
+    updateTreeDetails();
     console.log(encoded_txt);
     return encoded_txt;
     
 
 }
 
+
+
+function updateTreeDetails() {
+        treeDetails = codes.map(code => `${code.c} : ${code.code}`);
+    }
+
+    // Call the updateTreeDetails function when userInput changes
+    $: {
+        updateTreeDetails();
+    }
+
 </script>
 
+<style>
+    #codes {
+        position: absolute;
+        top: 30%;
+        left: 20%;
+        list-style-type: none;
+        font-size: 150%;
+        padding: 10px;
+        border: 3px solid rgb(18, 20, 20);
+        border-radius: 5px;
+    }
+</style>
+
 <textarea bind:value={userInput} rows="4" cols="50"></textarea>
+
+<ul id="codes">
+    {#each treeDetails as detail}
+        <li>{detail}</li>
+    {/each}
+</ul>
+
 
 <button on:click={runHuffman}>Encode Text</button>
 
