@@ -520,16 +520,16 @@
 
 
       
-      obj.index["s"] = -3;
-      obj.index["c"] = -2;
-      obj.index["l"] = 2.5;
-      obj.index["_"] = 2.5;
-      obj.index["e"] = 10;
-      obj.index["d"] = 13;
-      obj.index["t"] = 13;
-      obj.index["i"] = 22;
-      obj.index["n"] = 22;
-      obj.index["a"] = 19;
+      obj.index["s"] = -5;
+      obj.index["c"] = -4;
+      obj.index["l"] = 0.5;
+      obj.index["_"] = 0.5;
+      obj.index["e"] = 8;
+      obj.index["d"] = 11;
+      obj.index["t"] = 11;
+      obj.index["i"] = 20;
+      obj.index["n"] = 20;
+      obj.index["a"] = 17;
       
       x_pos = [];
       y_pos = [];
@@ -566,16 +566,16 @@
 
     if (index === 13) {
 
-      obj.index["s"] = 0;
-      obj.index["c"] = 0;
-      obj.index["l"] = 5.5;
-      obj.index["_"] = 5.5;
-      obj.index["e"] = 13;
-      obj.index["d"] = 16;
-      obj.index["t"] = 16;
-      obj.index["i"] = 25;
-      obj.index["n"] = 25;
-      obj.index["a"] = 22;
+      obj.index["s"] = -5;
+      obj.index["c"] = -5;
+      obj.index["l"] = 0.5;
+      obj.index["_"] = 0.5;
+      obj.index["e"] = 8;
+      obj.index["d"] = 11;
+      obj.index["t"] = 11;
+      obj.index["i"] = 20;
+      obj.index["n"] = 20;
+      obj.index["a"] = 17;
 
       x_pos = [];
       y_pos = [];
@@ -614,16 +614,16 @@
 
     if (index === 14) {
 
-      obj.index["l"] = 0;
-      obj.index["_"] = 0;
-      obj.index["e"] = 7.5;
-      obj.index["d"] = 10.5;
-      obj.index["t"] = 10.5;
-      obj.index["i"] = 19.5;
-      obj.index["n"] = 19.5;
-      obj.index["a"] = 16.5;
-      obj.index["s"] = 25;
-      obj.index["c"] = 25;
+      obj.index["l"] = -5;
+      obj.index["_"] = -5;
+      obj.index["e"] = 2.5;
+      obj.index["d"] = 5.5;
+      obj.index["t"] = 5.5;
+      obj.index["i"] = 14.5;
+      obj.index["n"] = 14.5;
+      obj.index["a"] = 11.5;
+      obj.index["s"] = 20;
+      obj.index["c"] = 20;
 
       x_pos = [];
       y_pos = [];
@@ -663,16 +663,16 @@
 
     if (index === 15) {
 
-      obj.index["l"] = 4;
-      obj.index["_"] = 4;
-      obj.index["e"] = 6.5;
-      obj.index["d"] = 9.5;
-      obj.index["t"] = 9.5;
-      obj.index["i"] = 19.5;
-      obj.index["n"] = 19.5;
-      obj.index["a"] = 16.5;
-      obj.index["s"] = 25;
-      obj.index["c"] = 25;
+      obj.index["l"] = -1;
+      obj.index["_"] = -1;
+      obj.index["e"] = 1.5;
+      obj.index["d"] = 4.5;
+      obj.index["t"] = 4.5;
+      obj.index["i"] = 15.5;
+      obj.index["n"] = 15.5;
+      obj.index["a"] = 11.5;
+      obj.index["s"] = 20;
+      obj.index["c"] = 20;
 
       x_pos = [];
       y_pos = [];
@@ -718,16 +718,16 @@
 
     if (index === 16) {
 
-      obj.index["a"] = -2;
-      obj.index["i"] = 1;
-      obj.index["n"] = 1;
-      obj.index["s"] = 6.5;
-      obj.index["c"] = 6.5;
-      obj.index["l"] = 19;
-      obj.index["_"] = 19;
-      obj.index["e"] = 21.5;
-      obj.index["d"] = 24.5;
-      obj.index["t"] = 24.5;
+      obj.index["a"] = -7;
+      obj.index["i"] = -4;
+      obj.index["n"] = -4;
+      obj.index["s"] = 1.5;
+      obj.index["c"] = 1.5;
+      obj.index["l"] = 14;
+      obj.index["_"] = 14;
+      obj.index["e"] = 16.5;
+      obj.index["d"] = 19.5;
+      obj.index["t"] = 19.5;
 
       x_pos = [];
       y_pos = [];
@@ -772,16 +772,16 @@
 
     if (index === 17) {
 
-      obj.index["a"] = 4.5;
-      obj.index["i"] = 7.5;
-      obj.index["n"] = 7.5;
-      obj.index["s"] = 2;
-      obj.index["c"] = 2;
-      obj.index["l"] = 19;
-      obj.index["_"] = 19;
-      obj.index["e"] = 21.5;
-      obj.index["d"] = 24.5;
-      obj.index["t"] = 24.5;
+      obj.index["a"] = -0.5;
+      obj.index["i"] = 2.5;
+      obj.index["n"] = 2.5;
+      obj.index["s"] = -3;
+      obj.index["c"] = -3;
+      obj.index["l"] = 14;
+      obj.index["_"] = 14;
+      obj.index["e"] = 16.5;
+      obj.index["d"] = 19.5;
+      obj.index["t"] = 19.5;
 
       x_pos = [];
       y_pos = [];
@@ -828,16 +828,16 @@
 
     if (index === 18) {
 
-      obj.index["l"] = 2;
-      obj.index["_"] = 2;
-      obj.index["e"] = 4.5;
-      obj.index["d"] = 7.5;
-      obj.index["t"] = 7.5;
-      obj.index["a"] = 22;
-      obj.index["i"] = 25;
-      obj.index["n"] = 25;
-      obj.index["s"] = 19.5;
-      obj.index["c"] = 19.5;
+      obj.index["l"] = -3;
+      obj.index["_"] = -3;
+      obj.index["e"] = -0.5;
+      obj.index["d"] = 2.5;
+      obj.index["t"] = 2.5;
+      obj.index["a"] = 17;
+      obj.index["i"] = 20;
+      obj.index["n"] = 20;
+      obj.index["s"] = 14.5;
+      obj.index["c"] = 14.5;
 
       x_pos = [];
       y_pos = [];
