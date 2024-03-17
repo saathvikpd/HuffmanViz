@@ -64,7 +64,6 @@
             <h1 class="text-center">Huffman Coding Visualization</h1>
         </div>
         <div class="col-md-4">
-            <a href="/test/priorityqueue/">PriorityQueueTest</a>
         </div>
     </div>
 
