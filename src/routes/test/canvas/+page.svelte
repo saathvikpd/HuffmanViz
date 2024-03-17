@@ -1,6 +1,5 @@
 <script>
-    import Node from '$lib/components/Node.svelte';
-  import { Subtree } from '$lib/components/Subtree.svelte';
+    import { Subtree } from '$lib/components/Subtree.svelte';
   
     // Sample data for testing
     let nodes = [
