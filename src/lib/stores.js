@@ -3,15 +3,18 @@ import { writable } from 'svelte/store';
 function createPriorityQueue() {
     const { subscribe, set, update } = writable([]);
 
-    function insert(item) {
+    function insert(item, callback) {
         update(items => {
-            // Find the correct position for the new item
             const index = items.findIndex(el => item.frequency < el.frequency);
             const updatedItems = [...items];
             if (index !== -1) {
                 updatedItems.splice(index, 0, item);
+                if (callback) {
+                    callback(index) }; // Call the callback with the index
             } else {
                 updatedItems.push(item);
+                if (callback) {
+                    callback(updatedItems.length - 1) }; // Call the callback with the index of the last item
             }
             return updatedItems;
         });
@@ -65,6 +68,7 @@ function createPriorityQueue() {
 export const priorityQueueStore = createPriorityQueue();
 
 export const highlightTopBar = writable(false);
+export const highlightBarIndex = writable({on:false, index:0});
 
 export const highlightLeftNode = writable('hidden');
 export const highlightRightNode = writable('hidden');
