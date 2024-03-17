@@ -152,11 +152,13 @@ function updateTreeDetails() {
 
 <textarea bind:value={userInput} rows="4" cols="50"></textarea>
 
-<ul id="codes">
-    {#each treeDetails as detail}
-        <li>{detail}</li>
-    {/each}
-</ul>
+{#if treeDetails.length > 0}
+    <ul id="codes">
+        {#each treeDetails as detail}
+            <li>{detail}</li>
+        {/each}
+    </ul>
+{/if}
 
 
 <button on:click={runHuffman}>Encode Text</button>
