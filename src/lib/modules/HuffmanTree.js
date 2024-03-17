@@ -87,7 +87,7 @@ class HuffmanTree {
         getCodes(root.right, s + "1", codes);
     }
     
-    function generateHuffmanCode(userText, root) {
+    export function generateHuffmanCode(userText, root) {
         let huffmanCodes = [];
         getCodes(root, "", huffmanCodes);
     
