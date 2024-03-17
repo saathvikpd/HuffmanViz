@@ -1,5 +1,8 @@
 export class TreeNode {
+    static idCounter = 0;
+
     constructor(character, frequency, left = null, right = null, parent = null) {
+        this.id = character ? character : 'internal'+TreeNode.idCounter++;
         this.code = '';
         this.character = character;
         this.frequency = frequency;

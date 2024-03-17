@@ -6,7 +6,10 @@
 
   // Add item to priority queue
   function addItem() {
-    priorityQueueStore.insert({ character: newItemCharacter, frequency: parseInt(newItemFrequency, 10) });
+    priorityQueueStore.insert({ character: newItemCharacter, frequency: parseInt(newItemFrequency, 10) },
+    (index) => {
+      console.log(`Item inserted at index ${index}`);
+    });
     newItemCharacter = '';
     newItemFrequency = 0;
   }

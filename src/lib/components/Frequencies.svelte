@@ -1,13 +1,29 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import * as d3 from 'd3';
-    import { priorityQueueStore, highlightTopBar } from '$lib/stores.js';
+    import { priorityQueueStore, highlightTopBar, highlightBarIndex } from '$lib/stores.js';
     import { TreeNode } from '$lib/modules/TreeNode.js';
   
     export let userInput;
     const dispatch = createEventDispatcher();
     let isSorted = false;
     let data = calculateFrequencies(userInput);
+
+    let highlightTopStatus = false;
+    let highlightNewBar;
+
+    // Subscribe to highlight status stores
+    highlightTopBar.subscribe(value => {
+        highlightTopStatus = value;
+        console.log(highlightTopStatus);
+        updateHistogram();
+    });
+
+    // Subscribe to highlight status stores
+    highlightBarIndex.subscribe(value => {
+        highlightNewBar = value;
+        updateHistogram();
+    });
 
     // Function to calculate and return character frequencies in order of appearance
     function calculateFrequencies(text) {
@@ -19,7 +35,7 @@
         return Array.from(freqMap.entries()).map(([character, frequency]) => ({ character, frequency }));
     }
 
-    // Populate the priority queue with TreeNode objects
+    // Populate the initial priority queue with TreeNode objects
     function populatePriorityQueue() {
         console.log("Populating priority queue with frequency data...");
         data.forEach(({ character, frequency }) => {
@@ -41,7 +57,7 @@
 
     // React to changes in the priority queue and update the histogram accordingly
     $: priorityQueueStore.subscribe(queue => {
-        const newData = queue.map(node => ({ character: node.character, frequency: node.frequency }));
+        const newData = queue.map(node => ({ character: node.id, frequency: node.frequency }));
         if (JSON.stringify(newData) !== JSON.stringify(data)) {
             data = newData;
             updateHistogram();
@@ -53,8 +69,6 @@
         data = calculateFrequencies(userInput);
         updateHistogram();
     }
-
-    $: $highlightTopBar, updateHistogram();
 
     function updateHistogram() {
         if (data.length === 0) return;
@@ -170,15 +184,30 @@
                 .text(d => d.character)), // Animate label changes
             exit => exit.remove()
         );
-
-        // Additional logic to highlight the top bar if shouldHighlightTopBar is true
-        if ($highlightTopBar) {
+        
+        // Update bar highlights
+        if (highlightNewBar.on) {
+            svg.selectAll('.bar')
+              .each(function(d, i) {
+                if (i === highlightNewBar.index) {
+                    d3.select(this).style('fill', 'red');
+                }
+            });
+        } else {
+            svg.selectAll('.bar')
+              .each(function(d, i) {
+                if (i === highlightNewBar.index) {
+                    d3.select(this).style('fill', 'steelblue');
+                }
+            });
+        }
+        if (highlightTopStatus) {
             svg.selectAll('.bar')
                 .each(function(d, i) {
                 if (i === 0) { // Assuming the data is already sorted, highlight the first bar
                     d3.select(this).style('fill', 'red');
                 }
-                });
+            });
         }
     }
 
