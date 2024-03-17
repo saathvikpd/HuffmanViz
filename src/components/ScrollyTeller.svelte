@@ -66,7 +66,7 @@
       Next
   </button>
 
-  <a href="./static/base.html">
+  <a href="/base.html">
     <button>Try it yourself!</button>
   </a>
 
