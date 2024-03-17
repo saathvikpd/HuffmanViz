@@ -5,6 +5,8 @@ Welcome to the Huffman Encoding Visualization project! This interactive web expe
 ## Project Link 🔗
 
 Get started with the Huffman Encoding Visualization experience [here](https://saathvikpd.github.io/finalproject/)!  
+UPDATE: BOOTSTRAP CSS NOT WORKING ON BUILD, ONLY IN DEV. WILL BE FIXING SOON TO IMPROVE USER INTERFACE
+
 
 ## About 📖
 
