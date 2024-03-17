@@ -8,64 +8,71 @@
         highlightTopBar, 
         highlightLeftNode,
         highlightRightNode,
-        highlightRoot } from '$lib/stores.js';
-	import Frequencies from './Frequencies.svelte';
+        highlightRoot,
+        highlightBarIndex } from '$lib/stores.js';
 
     let count = 0;
     let nodeA = null;
     let nodeB = null;
     let rootNode = null;
+    let rootIndexQueue = null;
+    
+    const steps = 5
 
     function executeNextStep() {
-        let currentStep = count % 5 + 1; // Adjusted for the 4-step cycle
+        let currentStep = count % steps + 1; // 5-step cycle through switches
 
         switch (currentStep) {
             case 1:
-                console.log("Highlighting the top bar and left node");
+                console.log("Step 1: Highlighting the top bar and left node");
                 // highlight the top bar in priorityQueueStore
                 highlightTopBar.set(true);
-                // only highlight the left child, all else invisible
-                highlightLeftNode.set('highlight');
                 // Create root node for tree graph
                 nodeA = priorityQueueStore.peek();
                 nodeB = priorityQueueStore.peekSecond();
                 let parentValue = nodeA.frequency+nodeB.frequency;
-                rootNode = new TreeNode("Internal: "+parentValue, parentValue, nodeA, nodeB);
+                rootNode = new TreeNode(null, parentValue, nodeA, nodeB);
+                // only highlight the left child and display subchildren if they exist, all else invisible
+                highlightLeftNode.set('highlight');
                 // log newly created node in tree graph to the console
-                console.log(nodeA);
+                console.log('selected node',nodeA);
                 break;
             case 2:
-                console.log("Drawing and highlighting the second node");
+                console.log("Step 2: Drawing and highlighting the second node");
                 // remove left node from the priority queue
                 priorityQueueStore.extractMin();
-                // both children visible but only right child highlighted
+                // both children and subchildren visible but only right child highlighted
                 highlightLeftNode.set('visible');
                 highlightRightNode.set('highlight');
                 // log newly created node in tree graph to the console
                 console.log(nodeB);
                 break;
             case 3:
-                console.log("Creating a new parent node from A and B, removing highlights");
+                console.log("Step 3: Creating a new parent node from A and B and inserting it into priority queue");
                 // remove highlight from priority queue
                 highlightTopBar.set(false);
-                // full tree is visible with no nodes highlighted
-                highlightRightNode.set('visible');
-                highlightRoot.set('visible');
                 // remove right node from the priority queue
                 priorityQueueStore.extractMin();
+                // full tree is visible with root node highlighted
+                highlightRightNode.set('visible');
+                highlightRoot.set('highlight');
+                // insert new parent node into priority queue and highlight it
+                priorityQueueStore.insert(rootNode, (index) => {
+                    rootIndexQueue = index;
+                });
+                highlightBarIndex.set({ on: true, index: rootIndexQueue });
                 break;
             case 4:
-                console.log("Moving the new parent node into priority queue");
-                // highlight root node and newly inserted node in priority queue
-                highlightRoot.set('highlight');
-                // highlightNewBar.set(true) - highlights newly inserted bar in histogram (doesnt exist yet)
-                priorityQueueStore.insert(rootNode);
+                console.log("Step 4: remove highlight from root node");
+                // remove highlight from root node and in priority queue
+                highlightRoot.set('visible');
+                highlightBarIndex.set({ on: false, index: rootIndexQueue });
                 // Resetting nodeA and nodeB to null
                 nodeA = null;
                 nodeB = null;
                 break;
             case 5:
-                console.log("Moving subtree to the waiting room");
+                console.log("Step 5: Moving subtree to the waiting room");
                 // hide the entire tree
                 highlightRoot.set('hidden');
                 highlightRightNode.set('hidden');
