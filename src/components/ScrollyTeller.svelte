@@ -66,6 +66,10 @@
       Next
   </button>
 
+  <a href="/index.html">
+    <button>Try it yourself!</button>
+  </a>
+
 
   </div>
 
