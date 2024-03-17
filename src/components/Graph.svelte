@@ -520,16 +520,16 @@
 
 
       
-      obj.index["s"] = 0;
-      obj.index["c"] = 1;
-      obj.index["l"] = 5.5;
-      obj.index["_"] = 5.5;
-      obj.index["e"] = 13;
-      obj.index["d"] = 16;
-      obj.index["t"] = 16;
-      obj.index["i"] = 25;
-      obj.index["n"] = 25;
-      obj.index["a"] = 22;
+      obj.index["s"] = -5;
+      obj.index["c"] = -4;
+      obj.index["l"] = 0.5;
+      obj.index["_"] = 0.5;
+      obj.index["e"] = 8;
+      obj.index["d"] = 11;
+      obj.index["t"] = 11;
+      obj.index["i"] = 20;
+      obj.index["n"] = 20;
+      obj.index["a"] = 17;
       
       x_pos = [];
       y_pos = [];
@@ -566,16 +566,16 @@
 
     if (index === 13) {
 
-      obj.index["s"] = 0;
-      obj.index["c"] = 0;
-      obj.index["l"] = 5.5;
-      obj.index["_"] = 5.5;
-      obj.index["e"] = 13;
-      obj.index["d"] = 16;
-      obj.index["t"] = 16;
-      obj.index["i"] = 25;
-      obj.index["n"] = 25;
-      obj.index["a"] = 22;
+      obj.index["s"] = -5;
+      obj.index["c"] = -5;
+      obj.index["l"] = 0.5;
+      obj.index["_"] = 0.5;
+      obj.index["e"] = 8;
+      obj.index["d"] = 11;
+      obj.index["t"] = 11;
+      obj.index["i"] = 20;
+      obj.index["n"] = 20;
+      obj.index["a"] = 17;
 
       x_pos = [];
       y_pos = [];
@@ -614,16 +614,16 @@
 
     if (index === 14) {
 
-      obj.index["l"] = 0;
-      obj.index["_"] = 0;
-      obj.index["e"] = 7.5;
-      obj.index["d"] = 10.5;
-      obj.index["t"] = 10.5;
-      obj.index["i"] = 19.5;
-      obj.index["n"] = 19.5;
-      obj.index["a"] = 16.5;
-      obj.index["s"] = 25;
-      obj.index["c"] = 25;
+      obj.index["l"] = -5;
+      obj.index["_"] = -5;
+      obj.index["e"] = 2.5;
+      obj.index["d"] = 5.5;
+      obj.index["t"] = 5.5;
+      obj.index["i"] = 14.5;
+      obj.index["n"] = 14.5;
+      obj.index["a"] = 11.5;
+      obj.index["s"] = 20;
+      obj.index["c"] = 20;
 
       x_pos = [];
       y_pos = [];
@@ -668,8 +668,8 @@
       obj.index["e"] = 6.5;
       obj.index["d"] = 9.5;
       obj.index["t"] = 9.5;
-      obj.index["i"] = 19.5;
-      obj.index["n"] = 19.5;
+      obj.index["i"] = 20.5;
+      obj.index["n"] = 20.5;
       obj.index["a"] = 16.5;
       obj.index["s"] = 25;
       obj.index["c"] = 25;

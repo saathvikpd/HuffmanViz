@@ -41,6 +41,7 @@ HuffmanNode.prototype.printCode = function(root, depth, codes){
     getCodes(root, "", codes);
 }
 
+<<<<<<< HEAD
 HuffmanNode.prototype.printHuffmanEncoding = function(root) {
     let codes = [];
     getCodes(root, "", codes);
@@ -51,6 +52,8 @@ HuffmanNode.prototype.printHuffmanEncoding = function(root) {
     });
 }
 
+=======
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f
 function displayTree(root, parent, depth){
     if (root.left == null && root.right == null) {
         textData = root.c + "/" + root.data;        

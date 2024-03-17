@@ -16,10 +16,17 @@ function setup() {
 	root = huffman.buildTree(huffmanQueue);
 	huffman.printCode(root, 1, codes);
 	getTreeDetails(codes);
+<<<<<<< HEAD
 	let encodedText = generateHuffmanCode(txt, root);
     console.log("Huffman Encoding for input text:", encodedText);
+=======
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f
 }
 
 
 function draw() {
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f

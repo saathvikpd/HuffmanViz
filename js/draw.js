@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f
 function getTreeDetails(codes) {
     let list = document.getElementById("codes");
     list.innerHTML = ''; // Clear the previous list content
@@ -26,12 +29,15 @@ function submitText(e) {
     emptyArray(charfreq1);
     emptyArray(codes);
     emptyArray(huffmanQueue);
+<<<<<<< HEAD
 
     if (new Set(txt).size === 1) {
         alert("Please type more than one unique character");
 
         return;
     }
+=======
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f
     
     // Populate arrays based on user input
     for (let i = 0; i < txt.length; i++) {
@@ -49,6 +55,7 @@ function submitText(e) {
     let svg = d3.select("#huffman-svg");
     svg.selectAll("*").remove(); // Clear the previous tree content
     setup();
+<<<<<<< HEAD
     let huffman1 = new HuffmanNode();
     let huffmanQueue1 = []
     for (let i = 0; i < charArray1.length; i++) {
@@ -78,10 +85,13 @@ encodedTextElement.textContent = displayText;
 document.getElementById("encoded-text").appendChild(encodedTextElement);
     // Animate typing of encoded text
     animateTextTyping(testtxt);
+=======
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f
 }
 
 function emptyArray(array) {
     array.length = 0;
+<<<<<<< HEAD
 }
 
 function animateTextTyping(text) {
@@ -106,4 +116,6 @@ function animateTextTyping(text) {
             .attr("dy", index === 0 ? 0 : "1.2em") // Adjust line spacing as needed
             .text(line);
     });
+=======
+>>>>>>> 07cd829854ce41576796331a10cb0bfc059ffd6f
 }
