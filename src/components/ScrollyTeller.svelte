@@ -66,7 +66,7 @@
       Next
   </button>
 
-  <a href="/index.html">
+  <a href="/base.html">
     <button>Try it yourself!</button>
   </a>
 
@@ -81,9 +81,7 @@
     <Graph {index} {width} {height}/>
   </div>
 
-  
-  
-<a href="js/index.html" target="_blank" class="link">Go to js/index.html</a>
+
 
 </main>
 
