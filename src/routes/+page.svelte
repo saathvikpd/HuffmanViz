@@ -27,6 +27,20 @@
     function reset() {
         window.location.reload();
     }
+
+   
+
+
+    function validateInput(event) {
+        const inputValue = event.target.value;
+        const regex = /^[a-zA-Z]*$/; // Regular expression to allow only letters
+
+        if (!regex.test(inputValue)) {
+            // If the input contains characters other than letters
+            // Remove those characters from the input
+            event.target.value = inputValue.replace(/[^a-zA-Z]/g, '');
+        }
+    }
 </script>
 
 
@@ -50,8 +64,9 @@
                 <textarea 
                     class="text-input form-control mb-3" 
                     bind:value={userInput} 
-                    placeholder="Type some text here..." 
+                    placeholder="Type some text(letters only) here..." 
                     disabled={inputLocked}
+                    on:input={validateInput}
                 ></textarea>
                 <Frequencies {userInput} on:lockInput={handleInputLock}/>
             </div>
