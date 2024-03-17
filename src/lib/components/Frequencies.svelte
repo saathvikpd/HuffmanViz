@@ -35,7 +35,7 @@
         return Array.from(freqMap.entries()).map(([character, frequency]) => ({ character, frequency }));
     }
 
-    // Populate the priority queue with TreeNode objects
+    // Populate the initial priority queue with TreeNode objects
     function populatePriorityQueue() {
         console.log("Populating priority queue with frequency data...");
         data.forEach(({ character, frequency }) => {
@@ -57,7 +57,7 @@
 
     // React to changes in the priority queue and update the histogram accordingly
     $: priorityQueueStore.subscribe(queue => {
-        const newData = queue.map(node => ({ character: node.character, frequency: node.frequency }));
+        const newData = queue.map(node => ({ character: node.id, frequency: node.frequency }));
         if (JSON.stringify(newData) !== JSON.stringify(data)) {
             data = newData;
             updateHistogram();

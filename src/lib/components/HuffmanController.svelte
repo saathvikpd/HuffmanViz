@@ -16,9 +16,11 @@
     let nodeB = null;
     let rootNode = null;
     let rootIndexQueue = null;
+    
+    const steps = 5
 
     function executeNextStep() {
-        let currentStep = count % 5 + 1; // 5-step cycle through switches
+        let currentStep = count % steps + 1; // 5-step cycle through switches
 
         switch (currentStep) {
             case 1:
@@ -29,11 +31,11 @@
                 nodeA = priorityQueueStore.peek();
                 nodeB = priorityQueueStore.peekSecond();
                 let parentValue = nodeA.frequency+nodeB.frequency;
-                rootNode = new TreeNode(parentValue, parentValue, nodeA, nodeB);
+                rootNode = new TreeNode(null, parentValue, nodeA, nodeB);
                 // only highlight the left child and display subchildren if they exist, all else invisible
                 highlightLeftNode.set('highlight');
                 // log newly created node in tree graph to the console
-                console.log(nodeA);
+                console.log('selected node',nodeA);
                 break;
             case 2:
                 console.log("Step 2: Drawing and highlighting the second node");
