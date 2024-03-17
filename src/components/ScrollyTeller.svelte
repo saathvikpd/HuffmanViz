@@ -66,7 +66,7 @@
       Next
   </button>
 
-  <a href="/base.html">
+  <a href="https://saathvikpd.github.io/tryit/">
     <button>Try it yourself!</button>
   </a>
 
