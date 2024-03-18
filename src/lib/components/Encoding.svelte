@@ -141,8 +141,7 @@ function generateHuffmanCode(userText, root) {
         updateTreeDetails();
     }
 
-    // Call the runHuffman function when the component is mounted
-    //onMount(runHuffman);
+    
 </script>
 
 <style>
@@ -190,11 +189,13 @@ function generateHuffmanCode(userText, root) {
 </div>
 <textarea bind:value={userInput} rows="4" cols="50"></textarea>
 
+<!-- Prints out Huffman encoding -->
 <div>
     <p>Encoded Text:</p>
     <textarea readonly rows="4" cols="50">{encoded_txt}</textarea>
 </div>
 
+<!-- Prints out legend -->
 {#if treeDetails.length > 0}
     <ul id="codes">
         {#each treeDetails as detail}
