@@ -2,7 +2,7 @@
 <script>
     import { TreeNode } from '$lib/modules/TreeNode';
     import DynamicTree from './DynamicTree.svelte';
-    // import { runHuffman } from '/src/lib/components/Encoding.svelte';
+    // import {runHuffman} from '$lib/components/Encoding.svelte';
     import { 
         priorityQueueStore,
         highlightTopBar, 

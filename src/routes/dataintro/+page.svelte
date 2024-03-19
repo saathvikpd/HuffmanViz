@@ -71,6 +71,7 @@
   <script>
     import { navigate } from 'svelte-routing';
     import { onMount, onDestroy } from 'svelte';
+    import bits from '$lib/images/bits.jpeg';
   
     let lines = [];
     let text = "";
@@ -149,6 +150,8 @@
     <pre>{text}</pre> <!-- Use <pre> tag to preserve new lines -->
     
     <!-- Button to navigate to the next page -->
-    <button class="button" onclick="window.location.href='/huffmanintro'" style="margin-left: 280px;">Continue</button> <!-- Adjust margin-left to shift the button -->
+    <button class="button" onclick="window.location.href='/finalproject/huffmanintro'" style="margin-left: 280px;">Continue</button> <!-- Adjust margin-left to shift the button -->
 </div>
+
+<img src ={bits} alt = "hi">
 

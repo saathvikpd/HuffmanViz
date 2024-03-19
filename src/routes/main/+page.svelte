@@ -4,11 +4,11 @@
     import Frequencies from '$lib/components/Frequencies.svelte';
     import HuffmanController from '$lib/components/HuffmanController.svelte';
     import Encoding from '$lib/components/Encoding.svelte';
-
     
     let userInput = '';
     let inputLocked = false;
     let sortedFrequencies = false;
+    
 
     // Position for animating the column. Starting from 100% (centered),
     // we'll animate this to 33% to move to the left side.
@@ -36,6 +36,7 @@
 
     function validateInput(event) {
         const inputValue = event.target.value;
+        // userInputStore.set(inputValue);
         const regex = /^[a-zA-Z]*$/; // Regular expression to allow only letters
 
         if (!regex.test(inputValue)) {
@@ -52,6 +53,9 @@
             alert("Please enter multiple unique letters.");
         }
     }
+
+    $: userInputStore.set(userInput);
+    console.log(userInputStore);
 </script>
 
 
@@ -86,7 +90,7 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
         <div class = "col-md-8">
             <div class="d-flex flex-column align-items-center">
                 <Encoding {userInput}/>
@@ -94,7 +98,7 @@
         </div>
         
             
-    </div>
+    </div> -->
 </div>
 
 
