@@ -137,7 +137,7 @@ function generateHuffmanCode(userText, root) {
 
     // Call the updateTreeDetails function when userInput changes
     $: {
-        updateTreeDetails();
+       runHuffman();
     }
 
     
@@ -189,17 +189,19 @@ function generateHuffmanCode(userText, root) {
 </style>
 
 
-<div class="progress-bar">
-    <svg class="progress" width="0%" height="100%">
-     
-      <!-- Bind text content to the percentage_bar variable -->
-      <text class="percentage" x="50%" y="50%">{percentage_bar.toFixed(2)}% of original file saved</text>
-    </svg>
-</div>
+
 <!-- <textarea bind:value={userInput} rows="4" cols="50"></textarea> -->
 
 <!-- Prints out Huffman encoding -->
+
     <div class = "container">
+        <div class="progress-bar">
+            <svg class="progress" width="0%" height="100%">
+             
+              <!-- Bind text content to the percentage_bar variable -->
+              <text class="percentage" x="50%" y="50%">{percentage_bar.toFixed(2)}% of original file saved</text>
+            </svg>
+        </div>
         <p>Encoded Text:</p>
         <p>{encoded_txt}</p>
         {userInput}
