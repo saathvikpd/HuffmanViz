@@ -37,8 +37,7 @@
 
     function validateInput(event) {
         const inputValue = event.target.value;
-        userInputStore.set(inputValue);
-        console.log($userInputStore);
+        // userInputStore.set(inputValue);
         const regex = /^[a-zA-Z]*$/; // Regular expression to allow only letters
 
         if (!regex.test(inputValue)) {
@@ -56,7 +55,8 @@
         }
     }
 
-    // $: userInputStore.set(userInput);
+    $: userInputStore.set(userInput);
+    console.log(userInputStore);
 </script>
 
 
@@ -92,7 +92,7 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
         <div class = "col-md-8">
             <div class="d-flex flex-column align-items-center">
                 <Encoding {userInput}/>
@@ -100,7 +100,7 @@
         </div>
         
             
-    </div>
+    </div> -->
 </div>
 
 

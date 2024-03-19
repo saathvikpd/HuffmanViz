@@ -7,12 +7,12 @@
     // userInputStore.subscribe(value => {
     //     userInputFromStore = value;
     // });
+    console.log($userInputStore)
 </script>
 
 <style>
 
 </style>
 
-<Encoding userInput={$userInputStore}/>
-
-<p>{userInputStore}</p>
+<Encoding {$userInputStore}/>
+<p>{$userInputStore}</p>
