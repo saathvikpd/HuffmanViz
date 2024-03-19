@@ -63,14 +63,23 @@
                 // full tree is visible with root node highlighted
                 highlightRightNode.set('visible');
                 highlightRoot.set('highlight');
+
+                // check if tree is constructed
+                if (priorityQueueStore.getSize() === 0) {
+                    finishedTree.set(true);
+                    highlightRoot.set('visible');
+                    priorityQueueStore.clear();
+                    console.log("Tree is finished!");
+                    console.log('priority queue',priorityQueueStore.getSize());
+                    break;
+                }
+
                 // insert new parent node into priority queue and highlight it
                 priorityQueueStore.insert(rootNode, (index) => {
                     rootIndexQueue = index;
                 });
                 highlightBarIndex.set({ on: true, index: rootIndexQueue });
-                if (priorityQueueStore.getSize() === 1) {
-                    finishedTree.set(true);
-                }
+                
                 break;
             case 4:
                 console.log("Step 4: remove highlight from root node");
@@ -112,4 +121,4 @@
 {/if}
 
 
-<DynamicTree {rootNode} />
+<DynamicTree {rootNode} {isTreeConstructionComplete} />

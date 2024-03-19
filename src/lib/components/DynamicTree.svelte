@@ -4,6 +4,7 @@
   import { highlightLeftNode, highlightRightNode, highlightRoot } from '$lib/stores.js';
 
   export let rootNode;
+  export let isTreeConstructionComplete = false;
 
   let svg;
   let width = 800; // Default width
@@ -83,9 +84,23 @@ function drawTree() {
       .attr("transform", d => `translate(${d.x},${d.y})`)
       .style("opacity", d => d.data.visibility === 'hidden' ? 0 : 1);
 
-  nodes.append("circle")
-    .attr("r", 10)
-    .style("fill", d => d.data.highlight === 'highlight' ? 'red' : '#999');
+  // Append circles for leaf nodes
+  nodes.filter(d => !d.children) // Filter for leaf nodes
+    .append("circle")
+      .attr("r", 20) // Increased radius to better contain text
+      .style("fill", d => d.data.highlight === 'highlight' ? 'red' : 'steelblue');
+
+  // Append rectangles for internal nodes
+  nodes.filter(d => d.children) // Filter for internal nodes
+    .append("rect")
+      .attr("x", -15) // Adjust as needed to contain the text
+      .attr("y", -15) // Adjust as needed to contain the text
+      .attr("width", 30) // Adjust based on your text size
+      .attr("height", 30) // Adjust based on your text size
+      .attr("rx", 5) // Rounded corners
+      .attr("ry", 5) // Rounded corners
+      .style("fill", d => d.data.highlight === 'highlight' ? 'red' : 'lightgreen');
+    
 
   nodes.append("text")
     .attr("dy", "0.35em")
