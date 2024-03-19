@@ -30,14 +30,14 @@
 
 <div class="introduction">
     <h1>Welcome to our DSC 106 Final Project, Huffman Encoding!</h1>
-    <h3>A project done by Kai, Saatvik, and Justin</h3>
+    <h3>A project done by Kai, Saathvik, and Justin</h3>
     <p>Explore the world of big data and the need for data compression.</p>
 
     <!-- SVG container for D3 visualization -->
     <svg width="300" height="100"></svg>
     
     <!-- Button to navigate to the next page -->
-    <button class="button" onclick="window.location.href='/dataintro'">Click here to get started</button>
+    <button class="button" onclick="window.location.href='/finalproject/dataintro'">Click here to get started</button>
   </div> 
   
   <style>
