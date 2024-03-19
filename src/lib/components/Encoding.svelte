@@ -179,8 +179,15 @@ function generateHuffmanCode(userText, root) {
         color: rgb(184, 145, 145); /* Set text color to white */
         font-weight: bold; /* Set font weight to bold */
     }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        height: 100vh; /* Set the container height to 100% of viewport height */
+    }
 </style>
-{#if isTreeConstructionComplete}
 
 
 <div class="progress-bar">
@@ -193,9 +200,10 @@ function generateHuffmanCode(userText, root) {
 <!-- <textarea bind:value={userInput} rows="4" cols="50"></textarea> -->
 
 <!-- Prints out Huffman encoding -->
-    <div>
+    <div class = "container">
         <p>Encoded Text:</p>
-        <textarea readonly rows="4" cols="50">{encoded_txt}</textarea>
+        <p>{encoded_txt}</p>
+        {userInput}
     </div>
 
     <!-- Prints out legend -->
@@ -206,9 +214,8 @@ function generateHuffmanCode(userText, root) {
             {/each}
         </ul>
     {/if}
-
-    {runHuffman}
-{/if}
+    
+    <!-- {runHuffman} -->
 
 <!-- <button on:click={runHuffman}>Encode Text</button> -->
 

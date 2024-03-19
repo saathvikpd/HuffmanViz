@@ -152,3 +152,5 @@
     <button class="button" onclick="window.location.href='/huffmanintro'" style="margin-left: 280px;">Continue</button> <!-- Adjust margin-left to shift the button -->
 </div>
 
+<img src = "/static/bits.jpeg" alt = "hi">
+

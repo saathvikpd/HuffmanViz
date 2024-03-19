@@ -73,3 +73,5 @@ export const highlightBarIndex = writable({on:false, index:0});
 export const highlightLeftNode = writable('hidden');
 export const highlightRightNode = writable('hidden');
 export const highlightRoot = writable('hidden');
+
+export const userInputStore = writable('');

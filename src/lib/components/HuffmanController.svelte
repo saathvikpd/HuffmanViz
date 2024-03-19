@@ -3,7 +3,7 @@
     import { TreeNode } from '$lib/modules/TreeNode';
     import TreeGraph from './TreeGraph.svelte';
     import DynamicTree from './DynamicTree.svelte';
-    // import { runHuffman } from '/src/lib/components/Encoding.svelte';
+    // import {runHuffman} from '$lib/components/Encoding.svelte';
     import { 
         priorityQueueStore,
         highlightTopBar, 
@@ -112,7 +112,7 @@
 {/if}
 
 {#if isTreeConstructionComplete}
-    <p>{isTreeConstructionComplete}</p>
+    <button class="btn btn-outline-primary btn-sm" onclick= "window.location.href='/conclusion'">See conclusion</button>
 {/if}
 
 
