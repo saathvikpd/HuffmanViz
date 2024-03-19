@@ -4,7 +4,7 @@
     import Frequencies from '$lib/components/Frequencies.svelte';
     import HuffmanController from '$lib/components/HuffmanController.svelte';
     import Encoding from '$lib/components/Encoding.svelte';
-    import userInputStore from '$lib/stores.js';
+
     
     let userInput = '';
     let inputLocked = false;
