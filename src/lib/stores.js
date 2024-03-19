@@ -51,6 +51,15 @@ function createPriorityQueue() {
         return secondItem;
     }
 
+    function getSize() {
+        let length = null;
+        update(items => {
+            length = items.length;
+            return items; // We don't modify the items here
+        });
+        return length;
+    }
+
     function clear() {
         set([]);
     }
@@ -61,6 +70,7 @@ function createPriorityQueue() {
         extractMin,
         peek,
         peekSecond,
+        getSize,
         clear
     };
 }
@@ -73,3 +83,5 @@ export const highlightBarIndex = writable({on:false, index:0});
 export const highlightLeftNode = writable('hidden');
 export const highlightRightNode = writable('hidden');
 export const highlightRoot = writable('hidden');
+
+export const finishedTree = writable(false);

@@ -1,5 +1,4 @@
 <script>
-    export let slug;
     import { tweened } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
     import Frequencies from '$lib/components/Frequencies.svelte';

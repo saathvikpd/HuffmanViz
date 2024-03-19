@@ -15,7 +15,6 @@
     // Subscribe to highlight status stores
     highlightTopBar.subscribe(value => {
         highlightTopStatus = value;
-        console.log(highlightTopStatus);
         updateHistogram();
     });
 
