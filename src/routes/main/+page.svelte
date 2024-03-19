@@ -4,7 +4,6 @@
     import Frequencies from '$lib/components/Frequencies.svelte';
     import HuffmanController from '$lib/components/HuffmanController.svelte';
     import Encoding from '$lib/components/Encoding.svelte';
-    import {userInputStore} from '$lib/stores.js'
     
     let userInput = '';
     let inputLocked = false;
@@ -72,7 +71,6 @@
         <div class="col-md-4">
         </div>
     </div>
-
     <div class="row justify-content-center" style="transform: translateX({$position}%)">
         <div class="col-md-4">
             <div class="d-flex flex-column align-items-center">

@@ -10,6 +10,7 @@ export class TreeNode {
         this.right = right;
         this.parent = parent; // Add a parent property
         this.isLeaf = !(left || right); // true for leaf, false for internal node
+        this.color = this.isLeaf? 'steelblue' : 'lightgreen';
 
         // Automatically set this node as the parent of its children
         if (this.left) {

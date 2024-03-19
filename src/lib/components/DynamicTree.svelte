@@ -27,28 +27,12 @@
   });
 
 
-  let highlightStatus = {
-    left: 'hidden',
-    right: 'hidden',
-    root: 'hidden'
-  };
+  $: $highlightLeftNode, drawTree();
+  $: $highlightRightNode, drawTree();
+  $: $highlightRoot, drawTree();
 
-  // Subscribe to highlight status stores
-  highlightLeftNode.subscribe(value => {
-    highlightStatus.left = value;
-    drawTree();
-  });
-  highlightRightNode.subscribe(value => {
-    highlightStatus.right = value;
-    drawTree();
-  });
-  highlightRoot.subscribe(value => {
-    highlightStatus.root = value;
-    drawTree();
-  });
-
-  onMount(drawTree);
-  afterUpdate(drawTree);
+  // onMount(drawTree);
+  // afterUpdate(drawTree);
 
 
 function drawTree() {
@@ -87,23 +71,22 @@ function drawTree() {
   nodes.filter(d => !d.children) // Filter for leaf nodes
     .append("circle")
       .attr("r", 20) // Increased radius to better contain text
-      .style("fill", d => d.data.highlight === 'highlight' ? 'red' : 'steelblue');
+      .style("fill", d => d.data.highlight === 'highlight' ? 'orange' : 'steelblue');
 
   // Append rectangles for internal nodes
   nodes.filter(d => d.children) // Filter for internal nodes
     .append("rect")
-      .attr("x", -15) // Adjust as needed to contain the text
-      .attr("y", -15) // Adjust as needed to contain the text
-      .attr("width", 30) // Adjust based on your text size
-      .attr("height", 30) // Adjust based on your text size
-      .attr("rx", 5) // Rounded corners
-      .attr("ry", 5) // Rounded corners
-      .style("fill", d => d.data.highlight === 'highlight' ? 'red' : 'lightgreen');
+      .attr("x", -20) // Adjust as needed to contain the text
+      .attr("y", -20) // Adjust as needed to contain the text
+      .attr("width", 40) // Adjust based on your text size
+      .attr("height", 40) // Adjust based on your text size
+      .attr("rx", 10) // Rounded corners
+      .attr("ry", 10) // Rounded corners
+      .style("fill", d => d.data.highlight === 'highlight' ? 'orange' : 'lightgreen');
     
 
   nodes.append("text")
     .attr("dy", "0.35em")
-    .attr("x", d => d.children ? -12 : 12)
     .style("text-anchor", "middle")
     .each(function(d) {
       const regex = /i(\d+):/;
@@ -136,8 +119,8 @@ function generateJson(rootNode) {
 
   let treeJSON = {
     name: `${rootNode.id}:${rootNode.frequency}`,
-    visibility: highlightStatus.root === 'hidden' ? 'hidden' : 'visible',
-    highlight: highlightStatus.root === 'highlight' ? 'highlight' : 'normal',
+    visibility: $highlightRoot === 'hidden' ? 'hidden' : 'visible',
+    highlight: $highlightRoot === 'highlight' ? 'highlight' : 'normal',
     children: [],
   }
 
@@ -146,10 +129,10 @@ function generateJson(rootNode) {
   treeJSON.children.push(generateRightChildJSON(rootNode.right));
 
   // modify right child based on stores
-  treeJSON.children[0].visibility = highlightStatus.left === 'hidden'? 'hidden' : 'visible';
-  treeJSON.children[0].highlight = highlightStatus.left === 'highlight' ? 'highlight' : 'normal';
-  treeJSON.children[1].visibility = highlightStatus.right === 'hidden'? 'hidden' : 'visible';
-  treeJSON.children[1].highlight = highlightStatus.right === 'highlight' ? 'highlight' : 'normal';
+  treeJSON.children[0].visibility = $highlightLeftNode === 'hidden'? 'hidden' : 'visible';
+  treeJSON.children[0].highlight = $highlightLeftNode === 'highlight' ? 'highlight' : 'normal';
+  treeJSON.children[1].visibility = $highlightRightNode === 'hidden'? 'hidden' : 'visible';
+  treeJSON.children[1].highlight = $highlightRightNode === 'highlight' ? 'highlight' : 'normal';
 
   return treeJSON;
 }
@@ -162,7 +145,7 @@ function generateLeftChildJSON(node) {
   if (node.left) children.push(generateLeftChildJSON(node.left));
   if (node.right) children.push(generateLeftChildJSON(node.right));
 
-  let visibility = highlightStatus.left === 'hidden'? 'hidden' : 'visible';
+  let visibility = $highlightLeftNode === 'hidden'? 'hidden' : 'visible';
   let highlight = 'normal';
 
   return {
@@ -181,7 +164,7 @@ function generateRightChildJSON(node) {
   if (node.left) children.push(generateRightChildJSON(node.left));
   if (node.right) children.push(generateRightChildJSON(node.right));
 
-  let visibility = highlightStatus.right === 'hidden'? 'hidden' : 'visible';
+  let visibility = $highlightRightNode === 'hidden'? 'hidden' : 'visible';
   let highlight = 'normal';
 
   return {
