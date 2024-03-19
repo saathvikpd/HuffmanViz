@@ -1,7 +1,7 @@
 <script>
-    import { onMount } from 'svelte';
     import { select } from 'd3-selection'; 
     export let userInput;
+    export let isTreeConstructionComplete;
 
     class HuffmanNode {
         constructor() {
@@ -93,7 +93,7 @@ function generateHuffmanCode(userText, root) {
     let encoded_txt = [];
 
     let percentage_bar = 0;
-    function runHuffman() {
+    export function runHuffman() {
         treeDetails = [];
         codes = [];
         let huffmanQueue = [];
@@ -180,6 +180,9 @@ function generateHuffmanCode(userText, root) {
         font-weight: bold; /* Set font weight to bold */
     }
 </style>
+{#if isTreeConstructionComplete}
+
+
 <div class="progress-bar">
     <svg class="progress" width="0%" height="100%">
      
@@ -187,24 +190,27 @@ function generateHuffmanCode(userText, root) {
       <text class="percentage" x="50%" y="50%">{percentage_bar.toFixed(2)}% of original file saved</text>
     </svg>
 </div>
-<textarea bind:value={userInput} rows="4" cols="50"></textarea>
+<!-- <textarea bind:value={userInput} rows="4" cols="50"></textarea> -->
 
 <!-- Prints out Huffman encoding -->
-<div>
-    <p>Encoded Text:</p>
-    <textarea readonly rows="4" cols="50">{encoded_txt}</textarea>
-</div>
+    <div>
+        <p>Encoded Text:</p>
+        <textarea readonly rows="4" cols="50">{encoded_txt}</textarea>
+    </div>
 
-<!-- Prints out legend -->
-{#if treeDetails.length > 0}
-    <ul id="codes">
-        {#each treeDetails as detail}
-            <li>{detail}</li>
-        {/each}
-    </ul>
+    <!-- Prints out legend -->
+    {#if treeDetails.length > 0}
+        <ul id="codes">
+            {#each treeDetails as detail}
+                <li>{detail}</li>
+            {/each}
+        </ul>
+    {/if}
+
+    {runHuffman}
 {/if}
 
-<button on:click={runHuffman}>Encode Text</button>
+<!-- <button on:click={runHuffman}>Encode Text</button> -->
 
 
 
