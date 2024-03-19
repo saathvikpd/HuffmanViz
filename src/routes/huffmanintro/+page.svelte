@@ -84,7 +84,7 @@
   <!-- svelte-ignore a11y-img-redundant-alt -->
     
     <!-- Button to navigate to the next page -->
-    <button class="button" onclick="window.location.href='/main'" style="margin-left: 280px;">Try it for yourself</button> <!-- Adjust margin-left to shift the button -->
+    <button class="button" onclick="window.location.href='/finalproject/main'" style="margin-left: 280px;">Try it for yourself</button> <!-- Adjust margin-left to shift the button -->
 </div>
 
 <!-- svelte-ignore a11y-img-redundant-alt -->
