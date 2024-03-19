@@ -1,8 +1,6 @@
 <script>
     import { select } from 'd3-selection'; 
     export let userInput;
-    
-    let isTreeConstructionComplete;
 
     class HuffmanNode {
         constructor() {
