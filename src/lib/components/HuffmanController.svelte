@@ -1,7 +1,6 @@
 <!-- HuffmanController.svelte -->
 <script>
     import { TreeNode } from '$lib/modules/TreeNode';
-    import TreeGraph from './TreeGraph.svelte';
     import DynamicTree from './DynamicTree.svelte';
     // import {runHuffman} from '$lib/components/Encoding.svelte';
     import { 
@@ -10,40 +9,34 @@
         highlightLeftNode,
         highlightRightNode,
         highlightRoot,
-        highlightBarIndex } from '$lib/stores.js';
+        highlightBarIndex,
+        finishedTree } from '$lib/stores.js';
 
     let count = 0;
     let nodeA = null;
     let nodeB = null;
     let rootNode = null;
     let rootIndexQueue = null;
-    export let isTreeConstructionComplete;
-    isTreeConstructionComplete = false;
+    $: isTreeConstructionComplete = false;
+
+    finishedTree.subscribe(value => {
+        isTreeConstructionComplete = value;
+    });
+
     const steps = 5;
 
     function executeNextStep() {
-        if (priorityQueueStore.length <= 1) {
-        console.log('Huffman tree construction complete. Stopping execution.');
-        isTreeConstructionComplete = true;
-        return;
-    }
 
         let currentStep = count % steps + 1; // 5-step cycle through switches
 
         switch (currentStep) {
             case 1:
-                
-                    
                 console.log("Step 1: Highlighting the top bar and left node");
                 // highlight the top bar in priorityQueueStore
                 highlightTopBar.set(true);
                 // Create root node for tree graph
                 nodeA = priorityQueueStore.peek();
                 nodeB = priorityQueueStore.peekSecond();
-                if(!nodeA || !nodeB){
-                    isTreeConstructionComplete = true;
-                    return;
-                }
                 let parentValue = nodeA.frequency + nodeB.frequency;
                 rootNode = new TreeNode(null, parentValue, nodeA, nodeB);
                 // only highlight the left child and display subchildren if they exist, all else invisible
@@ -70,11 +63,23 @@
                 // full tree is visible with root node highlighted
                 highlightRightNode.set('visible');
                 highlightRoot.set('highlight');
+
+                // check if tree is constructed
+                if (priorityQueueStore.getSize() === 0) {
+                    finishedTree.set(true);
+                    highlightRoot.set('visible');
+                    priorityQueueStore.clear();
+                    console.log("Tree is finished!");
+                    console.log('priority queue',priorityQueueStore.getSize());
+                    break;
+                }
+
                 // insert new parent node into priority queue and highlight it
                 priorityQueueStore.insert(rootNode, (index) => {
                     rootIndexQueue = index;
                 });
                 highlightBarIndex.set({ on: true, index: rootIndexQueue });
+                
                 break;
             case 4:
                 console.log("Step 4: remove highlight from root node");
@@ -116,4 +121,4 @@
 {/if}
 
 
-<DynamicTree {rootNode} />
+<DynamicTree {rootNode} {isTreeConstructionComplete} />

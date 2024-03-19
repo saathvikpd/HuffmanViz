@@ -45,16 +45,7 @@ const config = {
         }),
         paths: {
             base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
-        },
-        // Define your routes here
-        // router: {
-        //     base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
-        //     routes: [
-        //         // Example route
-        //         { type: 'page', pattern: '/main/page', params: () => ({ slug: 'page' }) },
-        //         // Add other routes here if needed
-        //     ]
-        // }
+        }
     }
 };
 
