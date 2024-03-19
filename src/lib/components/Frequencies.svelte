@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import { onMount, createEventDispatcher } from 'svelte';
     import * as d3 from 'd3';
     import { priorityQueueStore, highlightTopBar, highlightBarIndex } from '$lib/stores.js';
     import { TreeNode } from '$lib/modules/TreeNode.js';
@@ -12,9 +12,20 @@
     let highlightTopStatus = false;
     let highlightNewBar;
 
+    let width = 300;
+    function updateDimensions() {
+        width = document.getElementById('frequency-chart').clientWidth;
+        updateHistogram(); // Redraw the histogram using the updated dimensions
+    }
+
+    onMount(() => {
+        window.addEventListener('resize', updateDimensions);
+    });
+
     // Subscribe to highlight status stores
     highlightTopBar.subscribe(value => {
         highlightTopStatus = value;
+        console.log(highlightTopStatus);
         updateHistogram();
     });
 
@@ -31,7 +42,7 @@
         sanitizedText.split('').forEach(char => {
             freqMap.set(char, (freqMap.get(char) || 0) + 1);
         });
-        return Array.from(freqMap.entries()).map(([character, frequency]) => ({ character, frequency }));
+        return Array.from(freqMap.entries()).map(([character, frequency]) => ({ character, frequency, color:"steelblue" }));
     }
 
     // Populate the initial priority queue with TreeNode objects
@@ -49,15 +60,16 @@
     function sortAndPopulateQueue() {
         dispatch('lockInput', true); // Dispatch event to lock the input box
         data.sort((a, b) => a.frequency - b.frequency);
-        isSorted = true;
-        populatePriorityQueue();
         updateHistogram();
+        populatePriorityQueue();
+        console.log($priorityQueueStore);
+        isSorted = true;
     }
 
     // React to changes in the priority queue and update the histogram accordingly
     $: priorityQueueStore.subscribe(queue => {
-        const newData = queue.map(node => ({ character: node.id, frequency: node.frequency }));
-        if (JSON.stringify(newData) !== JSON.stringify(data)) {
+        const newData = queue.map(node => ({ character: node.id, frequency: node.frequency, color: node.color }));
+        if (JSON.stringify(newData) !== JSON.stringify(data) && isSorted) {
             data = newData;
             updateHistogram();
         }
@@ -69,13 +81,14 @@
         updateHistogram();
     }
 
+    
     function updateHistogram() {
         if (data.length === 0) return;
-        
+       
         const svg = d3.select('#frequency-chart');
         const margin = { top: 20, right: 30, bottom: 40, left: 40 };
         const fixedBarWidth = 20;
-        const chartWidth = 400; // Fixed chart width
+        const chartWidth = width; // Fixed chart width
         const heightPerBar = 25; // Including space between bars
         const chartHeight = data.length * heightPerBar + margin.top + margin.bottom; // Dynamic chart height
         
@@ -100,7 +113,6 @@
         const chartBody = svg.select('g');
 
         // Bind data to bars and labels
-
         const labels = chartBody.selectAll('.label').data(data, d => d.character);
 
         // Transition for animations
@@ -120,7 +132,7 @@
             .attr("x", 0)
             .attr("y", d => y(d.character))
             .attr("height", y.bandwidth())
-            .attr("fill", "steelblue")
+            .attr("fill",  d => d.color)
             .attr("rx", 5) // Rounded corners
             .attr("ry", 5)
             .attr("width", 0) // Start with a width of 0 for new bars
@@ -130,31 +142,50 @@
         // Append text for the frequency label in the enter selection, initially hidden
         barGroupEnter.append("text")
             .attr("class", "freq-label")
+            .style("fill", "black")
             .attr("text-anchor", "start")
             .attr("dy", "0.35em")
             .style("opacity", 0) // Start with labels hidden
             .attr("x", d => x(d.frequency) + 10) // Position slightly to the right of the bar
             .attr("y", d => y(d.character) + y.bandwidth() / 2);
 
+
+
         // Merge the enter and update selections for bars to re-apply event listeners
         const mergedBars = barGroupEnter.merge(barGroups).select(".bar");
-
         mergedBars
+            .attr("fill",  d => d.color)
             .on("mouseover", function(event, d) {
-                d3.select(this).attr('fill', 'orange'); // Highlight color on hover
+                // Store the original color of the bar
+                const originalColor = d3.select(this).attr('fill');
+
+                // Set a temporary attribute on the bar to store the original color
+                d3.select(this).attr('data-original-color', originalColor);
+
+                // Change the fill color to orange to indicate hover state
+                d3.select(this).attr('fill', 'lightblue');
+
+                // Make the frequency label visible
                 d3.select(this.parentNode).select(".freq-label")
-                    .style("opacity", 1); // Show the label on hover
+                    .style("opacity", 1);
             })
             .on("mouseout", function(d) {
-                d3.select(this).attr('fill', 'steelblue'); // Reset color on mouse out
+                // Retrieve the original color from the temporary attribute
+                const originalColor = d3.select(this).attr('data-original-color');
+
+                // Revert the bar's fill color to its original
+                d3.select(this).attr('fill', originalColor);
+
+                // Hide the label on mouse out
                 d3.select(this.parentNode).select(".freq-label")
-                    .style("opacity", 0); // Hide the label on mouse out
+                    .style("opacity", 0);
             });
+
 
         // Apply transitions to merged bars for consistent updates
         mergedBars.transition(d3.transition().duration(750))
             .attr("y", d => y(d.character))
-            .attr("width", d => x(d.frequency));
+            .attr("width", d => x(d.frequency))
 
         // Ensure labels for all bars, including new ones, are correctly positioned
         const mergedLabels = barGroupEnter.merge(barGroups).select(".freq-label");
@@ -186,32 +217,34 @@
 
         // Update bar highlights
         if (highlightNewBar.on) {
-            svg.selectAll('.bar')
+            mergedBars
               .each(function(d, i) {
                 if (i === highlightNewBar.index) {
-                    d3.select(this).style('fill', 'red');
+                    d3.select(this).attr('fill', 'orange');
                 }
             });
         } else {
-            svg.selectAll('.bar')
+            mergedBars
               .each(function(d, i) {
                 if (i === highlightNewBar.index) {
-                    d3.select(this).style('fill', 'steelblue');
+                    d3.select(this).attr('fill', d => d.color);
                 }
             });
         }
         if (highlightTopStatus) {
-            svg.selectAll('.bar')
+            mergedBars
                 .each(function(d, i) {
                 if (i === 0) { // Assuming the data is already sorted, highlight the first bar
-                    d3.select(this).style('fill', 'red');
+                    d3.select(this).attr('fill', 'orange');
                 }
-                });
+            });
         }
     }
 
 </script>
 
-<button type="button" class="btn btn-outline-primary btn-sm" on:click={sortAndPopulateQueue} disabled={isSorted}>Sort Frequencies</button>
+{#if !isSorted}
+    <button type="button" class="btn btn-outline-primary btn-sm" on:click={sortAndPopulateQueue} disabled={isSorted}>Sort Frequencies</button>
+{/if}
 
-<svg id="frequency-chart" width="400"></svg>
+<svg id="frequency-chart" width="100%"></svg>

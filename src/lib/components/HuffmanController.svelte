@@ -17,11 +17,6 @@
     let nodeB = null;
     let rootNode = null;
     let rootIndexQueue = null;
-    $: isTreeConstructionComplete = false;
-
-    finishedTree.subscribe(value => {
-        isTreeConstructionComplete = value;
-    });
 
     const steps = 5;
 
@@ -108,17 +103,14 @@
         // Prepare for the next step on the next button press
         count++;
     }
+
+    function getCodes() {}
 </script>
 
-{#if !isTreeConstructionComplete}
+{#if !$finishedTree}
     <button class="btn btn-outline-primary btn-sm" on:click={executeNextStep}>Next Step</button>
-   
-    <!-- {runHuffman()} -->
+{:else}
+    <button class="btn btn-outline-primary btn-sm" on:click={getCodes}>Generate Encodings</button>
 {/if}
 
-{#if isTreeConstructionComplete}
-    <p>{isTreeConstructionComplete}</p>
-{/if}
-
-
-<DynamicTree {rootNode} {isTreeConstructionComplete} />
+<DynamicTree {rootNode} />
