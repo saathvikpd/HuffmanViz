@@ -4,7 +4,6 @@
   import { highlightLeftNode, highlightRightNode, highlightRoot } from '$lib/stores.js';
 
   export let rootNode;
-  export let isTreeConstructionComplete = false;
 
   let svg;
   let width = 800; // Default width
