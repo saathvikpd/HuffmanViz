@@ -117,7 +117,7 @@
 {/if}
 
 {#if isTreeConstructionComplete}
-    <button class="btn btn-outline-primary btn-sm" onclick= "window.location.href='/conclusion'">See conclusion</button>
+    <button class="btn btn-outline-primary btn-sm" onclick= "window.location.href='/finalproject/conclusion'">See conclusion</button>
 {/if}
 
 
