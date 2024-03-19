@@ -1,9 +1,9 @@
 <script>
+    import { select } from 'd3-selection'; 
     export let userInput;
+    export let isTreeConstructionComplete;
 
-
-
-class HuffmanNode {
+    class HuffmanNode {
         constructor() {
             this.data = '0';
             this.c = '';
@@ -83,50 +83,56 @@ function generateHuffmanCode(userText, root) {
 
     return encryptedText;
 }
+    function updateProgress(value) {
+        // Select the progress bar and update its width
+        select('.progress').transition().duration(500).attr('width', value + '%');
+    }
 
+    let treeDetails = [];
+    let codes = [];
+    let encoded_txt = [];
 
-let treeDetails = [];
-let codes = [];
+    let percentage_bar = 0;
+    export function runHuffman() {
+        treeDetails = [];
+        codes = [];
+        let huffmanQueue = [];
+        let txt = userInput;
+        const huffman = new HuffmanNode();
+        let charArray1 =[];
+        let charfreq1 = [];
 
-
-
-function runHuffman() {
-    treeDetails = [];
-    codes = [];
-    let huffmanQueue = [];
-    let txt = userInput;
-    const huffman = new HuffmanNode();
-    let charArray1 =[]
-    let charfreq1 = []
-
-    for (let i = 0; i < txt.length; i++) {
-        if (txt[i] == " ") continue;
-        let n = charArray1.indexOf(txt[i]);
-        if (n == -1) {
-            charArray1.push(txt[i]);
-            charfreq1.push(1);
-        } else {
-            charfreq1[n] += 1;
+        for (let i = 0; i < txt.length; i++) {
+            if (txt[i] == " ") continue;
+            let n = charArray1.indexOf(txt[i]);
+            if (n == -1) {
+                charArray1.push(txt[i]);
+                charfreq1.push(1);
+            } else {
+                charfreq1[n] += 1;
+            }
         }
+
+        for (let i = 0; i < charArray1.length; i++) {
+            huffman.addNode(huffmanQueue, charArray1[i], charfreq1[i]);	
+        }
+
+        let root = huffman.buildTree(huffmanQueue);
+        getCodes(root, "", codes);
+        encoded_txt = generateHuffmanCode(txt, root);
+
+        // Calculate percentage progress
+        let txt_space = txt.length * 8;
+        let encoded_space = encoded_txt.length;
+        percentage_bar = ((txt_space - encoded_space) / txt_space) * 100;
+        updateProgress(percentage_bar);
+        updateTreeDetails();
+        console.log(percentage_bar);
+        console.log(encoded_txt);
+        return encoded_txt;
     }
 
-    for (let i = 0; i < charArray1.length; i++) {
-        huffman.addNode(huffmanQueue, charArray1[i], charfreq1[i]);	
-    }
-
-    let root = huffman.buildTree(huffmanQueue);
-    getCodes(root, "", codes)
-    let encoded_txt = generateHuffmanCode(txt, root);
-    updateTreeDetails();
-    console.log(encoded_txt);
-    return encoded_txt;
-    
-
-}
-
-
-
-function updateTreeDetails() {
+    function updateTreeDetails() {
         treeDetails = codes.map(code => `${code.c} : ${code.code}`);
     }
 
@@ -135,6 +141,7 @@ function updateTreeDetails() {
         updateTreeDetails();
     }
 
+    
 </script>
 
 <style>
@@ -148,21 +155,69 @@ function updateTreeDetails() {
         border: 3px solid rgb(18, 20, 20);
         border-radius: 5px;
     }
+
+    .progress-bar {
+        position: relative;
+        top: 50%;
+        left: 10%;
+        width: 50%;
+        height: 30px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: #007bff;
+        border-radius: 5px;
+    }
+
+    .percentage {
+        dominant-baseline: middle;
+        text-anchor: middle;
+        font-size: 14px;
+        color: rgb(184, 145, 145); /* Set text color to white */
+        font-weight: bold; /* Set font weight to bold */
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        height: 100vh; /* Set the container height to 100% of viewport height */
+    }
 </style>
 
-<textarea bind:value={userInput} rows="4" cols="50"></textarea>
 
-<ul id="codes">
-    {#each treeDetails as detail}
-        <li>{detail}</li>
-    {/each}
-</ul>
+<div class="progress-bar">
+    <svg class="progress" width="0%" height="100%">
+     
+      <!-- Bind text content to the percentage_bar variable -->
+      <text class="percentage" x="50%" y="50%">{percentage_bar.toFixed(2)}% of original file saved</text>
+    </svg>
+</div>
+<!-- <textarea bind:value={userInput} rows="4" cols="50"></textarea> -->
+
+<!-- Prints out Huffman encoding -->
+    <div class = "container">
+        <p>Encoded Text:</p>
+        <p>{encoded_txt}</p>
+        {userInput}
+    </div>
+
+    <!-- Prints out legend -->
+    {#if treeDetails.length > 0}
+        <ul id="codes">
+            {#each treeDetails as detail}
+                <li>{detail}</li>
+            {/each}
+        </ul>
+    {/if}
+    
+    <!-- {runHuffman} -->
+
+<!-- <button on:click={runHuffman}>Encode Text</button> -->
 
 
-<button on:click={runHuffman}>Encode Text</button>
 
-
-
-
-
- 

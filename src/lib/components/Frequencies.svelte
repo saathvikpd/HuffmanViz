@@ -184,7 +184,7 @@
                 .text(d => d.character)), // Animate label changes
             exit => exit.remove()
         );
-        
+
         // Update bar highlights
         if (highlightNewBar.on) {
             svg.selectAll('.bar')
@@ -207,7 +207,7 @@
                 if (i === 0) { // Assuming the data is already sorted, highlight the first bar
                     d3.select(this).style('fill', 'red');
                 }
-            });
+                });
         }
     }
 

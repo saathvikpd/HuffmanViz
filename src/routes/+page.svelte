@@ -1,135 +1,70 @@
-<script>
+ <script>
     import { tweened } from 'svelte/motion';
-	import { cubicInOut } from 'svelte/easing';
+    import { cubicInOut } from 'svelte/easing';
     import Frequencies from '$lib/components/Frequencies.svelte';
     import HuffmanController from '$lib/components/HuffmanController.svelte';
     import Encoding from '$lib/components/Encoding.svelte';
+    import { navigate } from 'svelte-routing';
+    import { onMount } from 'svelte';
+    import * as d3 from 'd3';
     
-    let userInput = '';
-    let inputLocked = false;
-    let sortedFrequencies = false;
-
-    // Position for animating the column. Starting from 100% (centered),
-    // we'll animate this to 33% to move to the left side.
-    const position = tweened(33, {
-        duration: 750,
-        delay: 1000,
-        easing: cubicInOut
-    });
-
-    // Handle the lockInput event from Frequencies component
-    function handleInputLock(event) {
-        inputLocked = event.detail;
-        if (inputLocked) {
-            position.set(0); // Animate to move to the left
-        }
+    // Function to navigate to the next page
+    function nextPage() {
+      navigate('main/');
     }
-
-    function reset() {
-        window.location.reload();
-    }
-
-    function sortFrequencies() {
-        sortedFrequencies = true;
-    }
-
-    function validateInput(event) {
-        const inputValue = event.target.value;
-        const regex = /^[a-zA-Z]*$/; // Regular expression to allow only letters
-
-        if (!regex.test(inputValue)) {
-            // If the input contains characters other than letters
-            // Remove those characters from the input
-            event.target.value = inputValue.replace(/[^a-zA-Z]/g, '');
-        }
-    }
-
-    // Function to check if userInput has only one unique letter
-    function checkUniqueLetter() {
-        const uniqueLetters = new Set(userInput.toLowerCase().replace(/[^a-z]/g, ''));
-        if (uniqueLetters.size === 1) {
-            alert("Please enter multiple unique letters.");
-        }
-    }
-</script>
-
-
-<div class="container-fluid">
-
-    <div class="row mb-3 align-items-start">
-        <div class="col-md-4">
-            <button type="button" class="btn btn-outline-danger btn-sm float-start" on:click={reset}>Reset</button>
-        </div>
-        <div class="col-md-4">
-            <h1 class="text-center">Huffman Coding Visualization</h1>
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>
-
-    <div class="row justify-content-center" style="transform: translateX({$position}%)">
-        <div class="col-md-4">
-            <div class="d-flex flex-column align-items-center">
-                <textarea 
-                    class="text-input form-control mb-3" 
-                    bind:value={userInput} 
-                    placeholder="Type some text(letters only) here..." 
-                    disabled={inputLocked}
-                    on:input={validateInput}
-                ></textarea>
-                <Frequencies {userInput} on:lockInput={handleInputLock}/>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="d-flex flex-column align-items-center">
-                <HuffmanController />
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class = "col-md-8">
-            <div class="d-flex flex-column align-items-center">
-                <Encoding {userInput}/>
-            </div>
-        </div>
-        
-            
-    </div>
-</div>
-
-
-
-
-
   
-<style>
-    h1 {
-        margin-top: 0.5rem;
-        margin-bottom: 1rem;
-    }
+    onMount(() => {
+      // D3 code for visualization and animations
+      // Example D3 code for a simple animation
+      const svg = d3.select('svg');
+      svg.append('circle')
+        .attr('cx', 50)
+        .attr('cy', 50)
+        .attr('r', 10)
+        .attr('fill', 'red')
+        .transition()
+        .duration(1000)
+        .attr('cx', 250);
+    });
+  </script>
+  
+  <style>
+   .introduction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the height to viewport height for vertical centering */
+    text-align: center; /* Center text horizontally */
+  }
 
-    .text-input {
-        width: 100%; /* Bootstrap's form-control class is full width by default */
-        height: 60px;
-        margin-bottom: 1rem; /* Bootstrap's spacing utility for margin bottom */
-        display: block;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 1em;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+  /* Style for the button */
+  .button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #007bff; /* Default blue color */
+    color: #fff; /* Text color */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    border: none; /* Remove default border */
+    outline: none; /* Remove default outline */
+  }
 
-    .container-fluid {
-        padding: 2rem; /* Padding around the entire container */
-    }
+  /* Hover effect */
+  .button:hover {
+    background-color: #0056b3; /* Bright blue color on hover */
+  }
+  </style>
+  
+  <div class="introduction">
+    <h1>Welcome to our DSC 106 Final Project, Huffman Encoding!</h1>
+    <h3>A project done by Kai, Saatvik, and Justin</h3>
+    <p>Explore the world of big data and the need for data compression.</p>
 
-    .float-start {
-        margin-right: 1rem;
-    }
+    <!-- SVG container for D3 visualization -->
+    <svg width="300" height="100"></svg>
     
-	:global(body) {
-		background-color: #f2eee2;
-		color: #001221;
-		transition: background-color 0.3s
-	}
-</style>
+    <!-- Button to navigate to the next page -->
+    <button class="button" onclick="window.location.href='/dataintro'">Click here to get started</button>
+  </div> 
+

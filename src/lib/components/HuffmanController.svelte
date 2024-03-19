@@ -3,6 +3,7 @@
     import { TreeNode } from '$lib/modules/TreeNode';
     import TreeGraph from './TreeGraph.svelte';
     import DynamicTree from './DynamicTree.svelte';
+    // import {runHuffman} from '$lib/components/Encoding.svelte';
     import { 
         priorityQueueStore,
         highlightTopBar, 
@@ -16,32 +17,45 @@
     let nodeB = null;
     let rootNode = null;
     let rootIndexQueue = null;
-    
-    const steps = 5
+    export let isTreeConstructionComplete;
+    isTreeConstructionComplete = false;
+    const steps = 5;
 
     function executeNextStep() {
+        if (priorityQueueStore.length <= 1) {
+        console.log('Huffman tree construction complete. Stopping execution.');
+        isTreeConstructionComplete = true;
+        return;
+    }
+
         let currentStep = count % steps + 1; // 5-step cycle through switches
 
         switch (currentStep) {
             case 1:
+                
+                    
                 console.log("Step 1: Highlighting the top bar and left node");
                 // highlight the top bar in priorityQueueStore
                 highlightTopBar.set(true);
                 // Create root node for tree graph
                 nodeA = priorityQueueStore.peek();
                 nodeB = priorityQueueStore.peekSecond();
-                let parentValue = nodeA.frequency+nodeB.frequency;
+                if(!nodeA || !nodeB){
+                    isTreeConstructionComplete = true;
+                    return;
+                }
+                let parentValue = nodeA.frequency + nodeB.frequency;
                 rootNode = new TreeNode(null, parentValue, nodeA, nodeB);
                 // only highlight the left child and display subchildren if they exist, all else invisible
                 highlightLeftNode.set('highlight');
                 // log newly created node in tree graph to the console
-                console.log('selected node',nodeA);
+                console.log('selected node', nodeA);
                 break;
             case 2:
                 console.log("Step 2: Drawing and highlighting the second node");
                 // remove left node from the priority queue
                 priorityQueueStore.extractMin();
-                // both children and subchildren visible but only right child highlighted
+                // both children and subchildren visibfle but only right child highlighted
                 highlightLeftNode.set('visible');
                 highlightRightNode.set('highlight');
                 // log newly created node in tree graph to the console
@@ -89,10 +103,17 @@
         // Prepare for the next step on the next button press
         count++;
     }
-    
 </script>
 
-<button class="btn btn-outline-primary btn-sm" on:click={executeNextStep}>Next Step</button>
+{#if !isTreeConstructionComplete}
+    <button class="btn btn-outline-primary btn-sm" on:click={executeNextStep}>Next Step</button>
+   
+    <!-- {runHuffman()} -->
+{/if}
+
+{#if isTreeConstructionComplete}
+    <button class="btn btn-outline-primary btn-sm" onclick= "window.location.href='/conclusion'">See conclusion</button>
+{/if}
 
 
 <DynamicTree {rootNode} />
