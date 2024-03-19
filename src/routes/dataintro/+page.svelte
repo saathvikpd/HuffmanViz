@@ -71,6 +71,7 @@
   <script>
     import { navigate } from 'svelte-routing';
     import { onMount, onDestroy } from 'svelte';
+    import bits from '$lib/images/bits.jpeg';
   
     let lines = [];
     let text = "";
@@ -152,5 +153,5 @@
     <button class="button" onclick="window.location.href='/huffmanintro'" style="margin-left: 280px;">Continue</button> <!-- Adjust margin-left to shift the button -->
 </div>
 
-<img src = "/static/bits.jpeg" alt = "hi">
+<img src ={bits} alt = "hi">
 

@@ -3,7 +3,7 @@
   <script>
     import { navigate } from 'svelte-routing';
     import { onMount, onDestroy } from 'svelte';
-    // import {myImage} from 'images/huffman.jpeg';
+    import theboydavid from '$lib/images/huffman.jpeg';
   
     let lines = [];
     let text = "";
@@ -88,5 +88,5 @@
 </div>
 
 <!-- svelte-ignore a11y-img-redundant-alt -->
-<img src="/static/huffman.jpeg" alt="Description of the image">>
+<img src={theboydavid} alt="Description of the image">
 
