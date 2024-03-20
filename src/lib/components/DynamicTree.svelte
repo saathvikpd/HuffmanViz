@@ -4,7 +4,6 @@
   import { highlightLeftNode, highlightRightNode, highlightRoot, finishedTree } from '$lib/stores.js';
 
   export let rootNode;
-  export let animate;
 
   let svg;
   let width = 800; // Default width
@@ -45,7 +44,7 @@ function drawTree() {
 
   const g = select(svg)
     .append("g")
-    .attr("transform", "translate(0,100)"); // Margin for the tree
+      .attr("transform", "translate(0,100)"); // Margin for the tree
 
   // Draw links with visibility controls
   const links = g.selectAll(".link")
@@ -55,17 +54,8 @@ function drawTree() {
       .attr("d", linkVertical().x(d => d.x).y(d => d.y))
       .attr("fill", "none")
       .attr("stroke", "#555")
+      .attr("stroke-width", 2.5)
       .attr("stroke-opacity", d => (d.source.data.visibility === 'hidden' || d.target.data.visibility === 'hidden') ? 0 : 1);
-  
-    //   g.selectAll(".link")
-    // .data(root.links())
-    // .enter().append("text")
-    // .attr("fill", "red")
-    // .attr("font-size", "12px")
-    // .attr("dx", d => (d.source.x + d.target.x) / 2)
-    // .attr("dy", d => (d.source.y + d.target.y) / 2)
-    // .style("text-anchor", "middle")
-    // .text(d => d.target.data.parent.children[0] === d ? '0' : '1');
 
   // Draw nodes with visibility and highlight controls
   const nodes = g.selectAll(".node")
@@ -79,7 +69,37 @@ function drawTree() {
   nodes.filter(d => !d.children) // Filter for leaf nodes
     .append("circle")
       .attr("r", 20) // Increased radius to better contain text
-      .style("fill", d => d.data.highlight === 'highlight' ? 'orange' : 'steelblue');
+      .style("fill", d => d.data.highlight === 'highlight' ? 'orange' : 'steelblue')
+    .on('mouseover', function(event, d) {
+      highlightPathToRoot(d);
+    })
+    .on('mouseout', function() {
+      resetHighlight();
+    });
+
+  function highlightPathToRoot(node) {
+    const path = [];
+    let current = node;
+    while(current) {
+      path.push(current);
+      current = current.parent;
+    }
+    // Specifically target circles and rectangles for fill color changes
+    nodes.selectAll('circle').style('fill', d => path.includes(d) ? 'orange' : 'steelblue');
+    nodes.selectAll('rect').style('fill', d => path.includes(d) ? 'orange' : 'lightgreen');
+    links.style('stroke', d => path.includes(d.target) ? 'orange' : '#555');
+    // Ensure text color remains unchanged
+    nodes.selectAll('text').style('fill', 'black'); // Adjust text color as needed
+  }
+
+  function resetHighlight() {
+    // Reset circles and rectangles fill color
+    nodes.selectAll('circle').style('fill', d => d.children ? 'lightgreen' : 'steelblue');
+    nodes.selectAll('rect').style('fill', 'lightgreen');
+    links.style('stroke', '#555');
+    // Reset text color to ensure it is visible and styled correctly
+    nodes.selectAll('text').style('fill', 'black'); // Adjust text color as needed
+  }
 
   // Append rectangles for internal nodes
   nodes.filter(d => d.children) // Filter for internal nodes
@@ -119,7 +139,8 @@ function drawTree() {
       } else { // For nodes that do not match the internal node pattern, display the name directly
           this.textContent = d.data.name;
         }
-      });
+    });
+
   }
 
   export function animateTreePaths() {
@@ -231,9 +252,11 @@ function generateLeftChildJSON(node) {
 
   let visibility = $highlightLeftNode === 'hidden'? 'hidden' : 'visible';
   let highlight = 'normal';
+  let code = '';
 
   return {
     name: `${node.id}:${node.frequency}`,
+    code,
     visibility,
     highlight,
     children: children.length ? children : null,
