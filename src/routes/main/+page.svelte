@@ -6,13 +6,11 @@
     import Encoding from '$lib/components/Encoding.svelte';
     import { finishedTree } from '$lib/stores.js'
     
+    
     let userInput = '';
     let inputLocked = false;
     let sortedFrequencies = false;
-
     $: $finishedTree;
-    
-
     // Position for animating the column. Starting from 100% (centered),
     // we'll animate this to 33% to move to the left side.
     const position = tweened(33, {
@@ -57,6 +55,7 @@
         }
     }
 
+    // $: userInputStore.set(userInput);
 </script>
 
 
@@ -72,6 +71,7 @@
         <div class="col-md-4">
         </div>
     </div>
+
     <div class="row justify-content-center" style="transform: translateX({$position}%)">
         <div class="col-md-4">
             <div class="d-flex flex-column align-items-center">
@@ -92,13 +92,14 @@
         </div>
     </div>
     {#if ($finishedTree)}
+    <p class = "text-center" style="font-size: 50px;">Scroll down</p>
     <div class="row justify-content-center">
         <div class = "col-md-8">
             <div class="d-flex flex-column align-items-center">
                 <Encoding {userInput}/>
+                </div>
             </div>
         </div>
-    </div>
     {/if}
 </div>
 
