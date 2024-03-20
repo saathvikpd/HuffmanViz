@@ -1,9 +1,10 @@
 <script>
-  import { onMount, afterUpdate } from 'svelte';
+  import { onMount } from 'svelte';
   import { select, hierarchy, tree, linkVertical } from 'd3';
-  import { highlightLeftNode, highlightRightNode, highlightRoot } from '$lib/stores.js';
+  import { highlightLeftNode, highlightRightNode, highlightRoot, finishedTree } from '$lib/stores.js';
 
   export let rootNode;
+  export let animate;
 
   let svg;
   let width = 800; // Default width
@@ -31,9 +32,6 @@
   $: $highlightRightNode, drawTree();
   $: $highlightRoot, drawTree();
 
-  // onMount(drawTree);
-  // afterUpdate(drawTree);
-
 
 function drawTree() {
   if (!rootNode) return;
@@ -50,7 +48,7 @@ function drawTree() {
     .attr("transform", "translate(0,100)"); // Margin for the tree
 
   // Draw links with visibility controls
-  g.selectAll(".link")
+  const links = g.selectAll(".link")
     .data(root.links())
     .enter().append("path")
       .attr("class", "link")
@@ -58,6 +56,16 @@ function drawTree() {
       .attr("fill", "none")
       .attr("stroke", "#555")
       .attr("stroke-opacity", d => (d.source.data.visibility === 'hidden' || d.target.data.visibility === 'hidden') ? 0 : 1);
+  
+    //   g.selectAll(".link")
+    // .data(root.links())
+    // .enter().append("text")
+    // .attr("fill", "red")
+    // .attr("font-size", "12px")
+    // .attr("dx", d => (d.source.x + d.target.x) / 2)
+    // .attr("dy", d => (d.source.y + d.target.y) / 2)
+    // .style("text-anchor", "middle")
+    // .text(d => d.target.data.parent.children[0] === d ? '0' : '1');
 
   // Draw nodes with visibility and highlight controls
   const nodes = g.selectAll(".node")
@@ -113,6 +121,82 @@ function drawTree() {
         }
       });
   }
+
+  export function animateTreePaths() {
+    const paths = select(svg).selectAll('path.link');
+
+    paths.each(function() {
+      const path = select(this);
+      const totalLength = path.node().getTotalLength();
+      path
+        .attr('stroke-dasharray', totalLength + ' ' + totalLength)
+        .attr('stroke-dashoffset', totalLength)
+        .transition()
+        .duration(2000) // Duration of the animation in milliseconds
+        .attr('stroke-dashoffset', 0);
+    });
+  }
+
+  // New function to animate the paths in a depth-first search manner
+  // function animateTreePathsDFS(node=rootNode, delay = 0) {
+  //   if (!node) return;
+  //   const duration = 500; // Duration of each path animation
+
+  //   // Animate path to this node
+  //   if (node.parent) {
+  //     // Assuming each path has a unique identifier based on the node's id
+  //     const pathSelector = `path[data-source-id="${node.parent.id}"][data-target-id="${node.id}"]`;
+  //     const path = select(svg).select(pathSelector);
+
+  //     const pathLength = path.node().getTotalLength();
+  //     path.attr('stroke-dasharray', `${pathLength} ${pathLength}`)
+  //       .attr('stroke-dashoffset', pathLength)
+  //       .transition()
+  //       .duration(duration)
+  //       .delay(delay)
+  //       .attr('stroke-dashoffset', 0);
+      
+  //     delay += duration; // Increment delay for the next path
+  //   }
+
+  //   // Recursively animate paths to children
+  //   if (node.children) {
+  //     node.children.forEach(child => {
+  //       animateTreePathsDFS(child, delay);
+  //     });
+  //   }
+  // }
+
+  // $: if (animate) {
+  //   console.log('root node heirarchy');
+  //   console.log(hierarchy(generateJson(rootNode)));
+  // }
+
+  // function highlightPath(root, targetName) {
+  //   // Find the target node
+  //   const target = root.find(d => d.data.name === targetName);
+  //   if (!target) return; // Exit if the target is not found
+
+  //   // Get the path from root to the target node
+  //   const path = root.path(target);
+
+  //   // Highlight each node in the path
+  //   path.forEach(node => {
+  //     // Assuming you have a method to highlight a node, e.g., by changing its color
+  //     select(`.node[data-name="${node.data.name}"]`)
+  //       .style("fill", "orange"); // Adjust the selector and style as needed
+  //   });
+
+  //   // Highlight links in the path
+  //   path.forEach((node, i) => {
+  //     if (i < path.length - 1) { // No link from the last node
+  //       const nextNode = path[i + 1];
+  //       select(`path.link[data-source-id="${node.data.id}"][data-target-id="${nextNode.data.id}"]`)
+  //         .style("stroke", "orange"); // Adjust the selector and style as needed
+  //     }
+  //   });
+  // }
+
 
 function generateJson(rootNode) {
   if (!rootNode) return null;
@@ -178,6 +262,8 @@ function generateRightChildJSON(node) {
 </script>
 
 <svg bind:this={svg} width="90%" height=600></svg>
+
+
 
 <style>
 

@@ -207,13 +207,48 @@
                 .attr('y', d => y(d.character) + y.bandwidth() / 2)
                 .attr('dy', '0.35em')
                 .attr('text-anchor', 'end')
-                .text(d => d.character),
-            update => update
-                .call(update => update.transition(transition)
+                .each(function(d) {
+                    const textElement = d3.select(this);
+                    if (/^i\d+$/.test(d.character)) {
+                        const match = d.character.match(/(i)(\d+)/);
+                        textElement.text(''); // Clear existing text
+                        // Append 'i' as bold text
+                        textElement.append('tspan')
+                            .style('font-weight', 'bold')
+                            .text(match[1]);
+                        // Append number as smaller, subscript text
+                        textElement.append('tspan')
+                            .attr('baseline-shift', 'sub')
+                            .style('font-size', '75%') // Smaller size for subscript
+                            .text(match[2]);
+                    } else {
+                        textElement.text(d.character); // No subscript required
+                    }
+                }),
+            update => update.call(update => update.transition(transition)
                 .attr('y', d => y(d.character) + y.bandwidth() / 2)
-                .text(d => d.character)), // Animate label changes
+                .each(function(d) {
+                    const textElement = d3.select(this);
+                    if (/^i\d+$/.test(d.character)) {
+                        const match = d.character.match(/(i)(\d+)/);
+                        textElement.text(''); // Clear for update
+                        // 'i' as bold text
+                        textElement.append('tspan')
+                            .style('font-weight', 'bold')
+                            .text(match[1]);
+                        // Append subscript as smaller text
+                        textElement.append('tspan')
+                            .attr('baseline-shift', 'sub')
+                            .style('font-size', '75%') // Smaller size for subscript
+                            .text(match[2]);
+                    } else {
+                        textElement.text(d.character);
+                    }
+                })),
             exit => exit.remove()
         );
+
+
 
         // Update bar highlights
         if (highlightNewBar.on) {
