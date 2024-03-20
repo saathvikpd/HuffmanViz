@@ -1,6 +1,7 @@
 <script>
     import { select } from 'd3-selection'; 
     export let userInput;
+    import { onMount, onDestroy } from 'svelte';
 
     class HuffmanNode {
         constructor() {
@@ -87,6 +88,8 @@ function generateHuffmanCode(userText, root) {
         select('.progress').transition().duration(500).attr('width', value + '%');
     }
 
+    
+
     let treeDetails = [];
     let codes = [];
     let encoded_txt = [];
@@ -139,15 +142,57 @@ function generateHuffmanCode(userText, root) {
     $: {
        runHuffman();
     }
+    
+
+
+let lines = [];
+    let text = "";
+    const paragraph = `
+Huffman encoding offers an elegant solution to optimizing storage
+efficiency. It assigns shorter codes to frequent characters and
+longer codes to less frequent ones, which helps  minimizes overall data space.
+The visulization that you just walked through saved a percentage of the original file space. 
+This is extremely useful in the real world, where data compression leads to cost and space efficient,
+especially as data gets exponentially bigger.
+`;
+    let lineIndex = 0;
+    let charIndex = 0;
+    let typingInterval;
+  
+    onMount(() => {
+      lines = paragraph.split('\n');
+      startTyping();
+    });
+  
+    onDestroy(() => {
+      clearInterval(typingInterval);
+    });
+  
+    function startTyping() {
+      typingInterval = setInterval(() => {
+        if (lineIndex < lines.length) {
+          const line = lines[lineIndex];
+          if (charIndex < line.length) {
+            text += line[charIndex++];
+          } else {
+            text += '\n'; // Add new line when the line is fully typed
+            lineIndex++;
+            charIndex = 0;
+          }
+        } else {
+          clearInterval(typingInterval);
+        }
+      }, 15); // Adjust typing speed here
+    }
 
     
 </script>
 
 <style>
     #codes {
-        position: absolute;
-        top: 30%;
-        left: 20%;
+        position: relative;
+        top: 80%;
+        left: -500%;
         list-style-type: none;
         font-size: 150%;
         padding: 10px;
@@ -157,22 +202,22 @@ function generateHuffmanCode(userText, root) {
 
     .progress-bar {
         position: relative;
-        top: 50%;
-        left: 10%;
+        top: 20%;
+        left: 0%;
         width: 50%;
         height: 30px;
-        background-color: #f0f0f0;
+        background-color: #a1affe;
         border-radius: 5px;
     }
 
     .progress {
         height: 100%;
-        background-color: #007bff;
+        background-color: #2a43f9;
         border-radius: 5px;
     }
 
     .percentage {
-        dominant-baseline: middle;
+        /* dominant-baseline: middle; */
         text-anchor: middle;
         font-size: 14px;
         color: rgb(184, 145, 145); /* Set text color to white */
@@ -186,6 +231,16 @@ function generateHuffmanCode(userText, root) {
         align-items: center; /* Center horizontally */
         height: 100vh; /* Set the container height to 100% of viewport height */
     }
+
+    .bigger-aesthetic-font {
+        font-family: 'Helvetica', sans-serif; /* Example of using Helvetica font family */
+        font-size: 20px; /* Adjust the font size as needed */
+    }
+
+    .generate{
+        position: relative;
+        top: 5%
+    }
 </style>
 
 
@@ -195,26 +250,35 @@ function generateHuffmanCode(userText, root) {
 <!-- Prints out Huffman encoding -->
 
     <div class = "container">
-        <div class="progress-bar">
-            <svg class="progress" width="0%" height="100%">
-             
-              <!-- Bind text content to the percentage_bar variable -->
-              <text class="percentage" x="50%" y="50%">{percentage_bar.toFixed(2)}% of original file saved</text>
-            </svg>
-        </div>
-        <p>Encoded Text:</p>
-        <p>{encoded_txt}</p>
-        {userInput}
-    </div>
-
-    <!-- Prints out legend -->
-    {#if treeDetails.length > 0}
+        <div>
+            {#if treeDetails.length > 0}
+            <!-- <p>Letter Encoding Legend</p> -->
         <ul id="codes">
+            
             {#each treeDetails as detail}
                 <li>{detail}</li>
             {/each}
         </ul>
     {/if}
+    
+        </div>
+        <div class="progress-bar">
+            <svg class="progress" width="{percentage_bar}%" height="100%">
+                <rect class="progress" width="0%" height="100%" fill="#854000"></rect>
+                <text class="percentage" x="50%" y="65%" style="fill: white;">{percentage_bar.toFixed(2)}% smaller file size</text>
+            </svg>
+        </div>
+        <p class = "bigger-aesthetic-font">Your text: {userInput}</p>
+        <p class = "bigger-aesthetic-font">Encoded Text:</p>
+        <p class = "bigger-aesthetic-font">{encoded_txt}</p>
+        <div class = "generate">
+            <pre>{text}</pre>
+        </div>
+        
+       
+    </div>
+
+    <!-- Prints out legend -->
     
     <!-- {runHuffman} -->
 
