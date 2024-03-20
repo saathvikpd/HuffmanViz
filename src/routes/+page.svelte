@@ -31,7 +31,7 @@
 <div class="introduction">
     <h1>Welcome to our DSC 106 Final Project, Huffman Encoding!</h1>
     <h3>A project done by Kai, Saathvik, and Justin</h3>
-    <p>Explore the world of big data and the need for data compression.</p>
+    <p class = "text">Explore the world of big data and the need for data compression.</p>
 
     <!-- SVG container for D3 visualization -->
     <svg width="300" height="100"></svg>
@@ -52,7 +52,7 @@
 
   /* Style for the button */
   .button {
-    padding: 10px 20px;
+    padding: 20px 30px;
     border-radius: 5px;
     background-color: #007bff; /* Default blue color */
     color: #fff; /* Text color */
@@ -60,11 +60,16 @@
     transition: background-color 0.3s ease; /* Smooth transition for background color */
     border: none; /* Remove default border */
     outline: none; /* Remove default outline */
+    font-size: 30px;
   }
 
   /* Hover effect */
   .button:hover {
     background-color: #0056b3; /* Bright blue color on hover */
+  }
+
+  .text{
+    font-size: 25px;
   }
   </style>
   
