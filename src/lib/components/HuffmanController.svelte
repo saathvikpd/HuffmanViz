@@ -18,6 +18,8 @@
     let rootNode = null;
     let rootIndexQueue = null;
 
+    let currentExplanation = '';
+
     const steps = 5;
 
     function executeNextStep() {
@@ -27,6 +29,7 @@
         switch (currentStep) {
             case 1:
                 console.log("Step 1: Highlighting the top bar and left node");
+                currentExplanation = "We remove the node with the lowest frequency from the priority queue and create a new leaf node from it.";
                 // highlight the top bar in priorityQueueStore
                 highlightTopBar.set(true);
                 // Create root node for tree graph
@@ -41,6 +44,7 @@
                 break;
             case 2:
                 console.log("Step 2: Drawing and highlighting the second node");
+                currentExplanation = "We remove the node with next the lowest frequency from the priority queue and create another leaf node from it.";
                 // remove left node from the priority queue
                 priorityQueueStore.extractMin();
                 // both children and subchildren visibfle but only right child highlighted
@@ -51,6 +55,7 @@
                 break;
             case 3:
                 console.log("Step 3: Creating a new parent node from A and B and inserting it into priority queue");
+                currentExplanation = "We create a new parent node from the two previous nodes by summing their freqencies and insert the new node back into the priority queue.";
                 // remove highlight from priority queue
                 highlightTopBar.set(false);
                 // remove right node from the priority queue
@@ -61,6 +66,7 @@
 
                 // check if tree is constructed
                 if (priorityQueueStore.getSize() === 0) {
+                    currentExplanation = "Our huffman tree is complete! We generate the codes by tracing paths from the root node to the leaf nodes. If we go to the left, we insert a 0 to the code, and if we go to the right, we insert a 1 to the code.";
                     finishedTree.set(true);
                     highlightRoot.set('visible');
                     priorityQueueStore.clear();
@@ -78,6 +84,7 @@
                 break;
             case 4:
                 console.log("Step 4: remove highlight from root node");
+                currentExplanation = "Now we prepare to repeat the process until the tree is finished. We will know it is done once the priority queue is empty.";
                 // remove highlight from root node and in priority queue
                 highlightRoot.set('visible');
                 highlightBarIndex.set({ on: false, index: rootIndexQueue });
@@ -104,13 +111,22 @@
         count++;
     }
 
-    function getCodes() {}
+    let animate = false;
+    function triggerAnimation() {
+        animate = !animate;
+    }
 </script>
 
 {#if !$finishedTree}
     <button class="btn btn-outline-primary btn-sm" on:click={executeNextStep}>Next Step</button>
 {:else}
-    <button class="btn btn-outline-primary btn-sm" on:click={getCodes}>Generate Encodings</button>
+    <button class="btn btn-outline-primary btn-sm" on:click={triggerAnimation}>Generate Encodings</button>
 {/if}
 
-<DynamicTree {rootNode} />
+<div class="p-3">
+    <p class="text-info fs-5 p-3">
+      {currentExplanation}
+    </p>
+</div>
+
+<DynamicTree {rootNode} {animate}/>
