@@ -99,7 +99,7 @@
   <div class="digital-text">
       <h1 style="margin-left: 270px;">Enter Huffman Encoding</h1>
       <pre>{text}</pre>
-      <button class="button" onclick="window.location.href='/finalproject/main'" style="margin-left: 340px;">Try it for yourself</button> <!-- Adjust margin-left to shift the button -->
+      <button class="button" onclick="window.location.href='/DSC106FinalProject/main'" style="margin-left: 340px;">Try it for yourself</button> <!-- Adjust margin-left to shift the button -->
   </div>
   <div class="digital-image">
       <!-- svelte-ignore missing-declaration -->
