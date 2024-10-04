@@ -96,7 +96,7 @@
   <div class="digital-text">
       <h1 style="margin-left: 280px;">Bits and bytes</h1>
       <pre>{text}</pre>
-      <button class="button" onclick="window.location.href='/finalproject/huffmanintro'" style="margin-left: 290px;">Continue</button>
+      <button class="button" onclick="window.location.href='/DSC106FinalProject/huffmanintro'" style="margin-left: 290px;">Continue</button>
   </div>
   <div class="digital-image">
       <img src={bits} alt="hi">
