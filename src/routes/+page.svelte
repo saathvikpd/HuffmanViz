@@ -37,7 +37,7 @@
     <svg width="300" height="100"></svg>
     
     <!-- Button to navigate to the next page -->
-    <button class="button" onclick="window.location.href='/DSC106FinalProject/dataintro'">Click here to get started</button>
+    <button class="button" onclick="window.location.href='/HuffmanViz/dataintro'">Click here to get started</button>
   </div> 
   
   <style>
