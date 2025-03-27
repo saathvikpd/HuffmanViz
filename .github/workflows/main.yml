@@ -27,7 +27,7 @@ jobs:
           npm run build
 
       - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@f475a56f7c1a3c5c991f37bfb37b1c1fa81c93f4
         with:
           # this should match the `pages` option in your adapter-static options
           path: 'build/'
